@@ -134,6 +134,10 @@ uv run agentcore invoke --agent ict_agent_lab \
 Resource IDs (`GATEWAY_URL`, `KB_ID`, `REGION`, `MEMORY_ID`) are literals in `main.py`
 (`setup_permissions.py` parses them).
 
+> **Note (public repo):** the IDs in `main.py` point to resources in a temporary AWS sandbox
+> used for the course. That sandbox will be torn down, so they won't work for anyone else.
+> Replace them with your own resources before deploying.
+
 ## Test results
 
 ### Unit tests (pytest)
@@ -152,25 +156,33 @@ tool calls are in [`tests/outputs/ftn_local_tool_calls.txt`](tests/outputs/ftn_l
 `sample_eurusd` gives an `entry_candidate`, bearish, CBDR family, 4 levels
 (1.08710 / 1.08380 / 1.08050 / 1.07720), 1 PD confluence, ATR 74 pips, no NO-TRADE reasons, paper.
 
-### Deployed scenarios (`ict_agent_lab`)
+### Deployed scenarios (`ict_agent_lab`, 2026-09-26 ~12:12–12:16 SAST)
+
+Deployed with `./scripts/deploy_lab.sh` and run with `./scripts/run_scenarios.sh`. Raw outputs are
+in [`tests/outputs/`](tests/outputs/). The run redacted every 12-digit number, so the fresh customer
+ID shows as `CUST-LAB-XXXXXXXXXXXX`.
+
+**Summary: 12 invocations, 10 pass and 2 fail (T1 order tracking, T4b memory recall). Course rubric: 4 of 6 scenarios pass (T2, T3, T5, T6); T1 and T4 need a re-run.**
 
 | # | Scenario | Customer | Expected | Result |
 |---|----------|----------|----------|--------|
-| 1 | Track ORD-001 | CUST-123 | SHIPPED, UPS, $89.99 | _not run yet_ |
-| 2 | Refund ORD-002 | CUST-123 | refund **$139.99** (not $0) | _not run yet_ |
-| 3 | Platinum benefits (KB) | CUST-123 | KB tier benefits | _not run yet_ |
-| 4 | Memory store/recall | fresh id | recalls "Jane", concise | _not run yet_ |
-| 5 | Gold, 4250 pts, $150 | fresh id | 4000 pts, 10%, **$99.00**, 400 remaining | _not run yet_ |
-| 5b | Same, stale memory | CUST-123 | **$99.00** (tool beats memory) | _not run yet_ |
-| 6 | Browser page title | CUST-123 | udacity.com title | _not run yet_ |
-| 7 | Risk/reward long NQ 18000/17980/18060 | fresh id | risk 20, reward 60, **3R** | _not run yet_ |
-| 8 | Silver Bullet hypothesis | fresh id | NQ, 10:00–11:00 America/New_York | _not run yet_ |
-| 9 | FTN workflow on `sample_eurusd` | fresh id | entry_candidate, CBDR, 4 levels, paper | _not run yet_ |
-| 10 | FTN briefing `integration_m1_m9_eurusd` | fresh id | EURUSD 2017-01-18, 5 candidates | _not run yet_ |
+| 1 | Track ORD-001 | CUST-123 | SHIPPED, UPS, $89.99 | ❌ **FAIL**: `RuntimeClientError ... Received error (500) from runtime`. This was the first invocation straight after deploy + `setup_permissions`. Likely cause: cold start or IAM propagation, since the same `get_order` path worked 20 s later inside T2's refund. CloudWatch logs not checked yet; needs a re-run. |
+| 2 | Refund ORD-002 | CUST-123 | refund **$139.99** (not $0) | ✅ PASS: REF-RISFUSK6, **$139.99**, APPROVED (the course run refunded $0) |
+| 3 | Platinum benefits (KB) | CUST-123 | KB tier benefits | ✅ PASS: free same-day shipping, 15% discount, priority support, 5,000+ points |
+| 4a | Memory store | fresh id | acknowledges Jane / concise | ✅ PASS: "Hello Jane! I'll keep my responses concise for you." |
+| 4b | Memory recall (60 s later) | fresh id | recalls "Jane", concise | ❌ **FAIL**: "I don't currently have any stored information about your identity or preferences." Likely cause: long-term memory extraction wasn't finished after 60 s, or a new-role permission hadn't propagated yet. Retrieval itself works (T3 used CUST-123's stored context). Needs a re-run with a longer wait. |
+| 5 | Gold, 4250 pts, $150 | fresh id | 4000 pts, 10%, **$99.00**, 400 remaining | ✅ PASS: 4,000 pts = $40, savings $51.00, **final $99.00**, +150 earned, **400 remaining**. Presentation nit: it labels the Gold discount "$15.00", but the validated tool output is $11.00 (10% of the $110 post-points subtotal). |
+| 5b | Same, stale memory | CUST-123 | **$99.00** (tool beats memory) | ✅ PASS (source-of-truth fix): **final $99.00**, 400 remaining, no mention of the old $95. Same "$15.00" label nit. |
+| 6 | Browser page title | CUST-123 | udacity.com title | ✅ PASS: "Learn the Latest Tech Skills; Advance Your Career \| Udacity" |
+| 7 | Risk/reward long NQ 18000/17980/18060 | fresh id | risk 20, reward 60, **3R** | ✅ PASS: risk 20, reward 60, **R multiple 3.0**. Presentation nit: it calls these "$20/$60 per contract"; they are points. |
+| 8 | Silver Bullet hypothesis | fresh id | all ResearchHypothesis fields | ✅ PASS: hypothesis, instrument NQ, observable and invalidation conditions, window **10:00–11:00 America/New_York** ("Silver Bullet window"), 6 required-evidence items |
+| 9 | FTN workflow on `sample_eurusd` | fresh id | matches local run | ✅ PASS: cbdr; L1–L4 **1.08710 / 1.08380 / 1.08050 / 1.07720**; confluence cbdr_dn_0 × D_FVG_bear; no NO-TRADE reasons; **entry_candidate** (paper). Identical to `ftn_local_tool_calls.txt`. |
+| 10 | FTN briefing `integration_m1_m9_eurusd` | fresh id | works in runtime | ✅ PASS: 5 candidates (REV, CONSO, PIP20, BB ineligible; FTN annotate / objectives_only); no entry ticket. FTN's temp-dir redirection works inside the runtime. |
 
-_The deployment and scenario runs have not been done yet (no AWS credentials were
-available in the build session). Run `./scripts/deploy_lab.sh` and
-`./scripts/run_scenarios.sh`, then fill in this table._
+**Follow-ups:**
+1. Re-run T1, and T4b after a wait of at least 2 minutes.
+2. Check CloudWatch for the T1 500.
+3. Consider making the prompt quote tool fields verbatim, to fix the "$15" and "$20 per contract" labels.
 
 ## Cleanup
 

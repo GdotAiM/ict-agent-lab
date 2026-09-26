@@ -1,0 +1,58 @@
+$ agentcore invoke --agent ict_agent_lab '{"prompt": "Give me the FTN Month-9 briefing for the integration_m1_m9_eurusd fixture and list each candidate module with its state and reason.", "customer_id": "CUST-LAB-XXXXXXXXXXXX", "session_id": "t10"}' --session-id lab-test10_ftn_briefing-1790417766-XXXXXXXXXXXX00000000
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session: lab-test10_ftn_briefing-1790417766-XXXXXXXXXXXX00000000             │
+│ Request ID: c64a02d5-331c-4740-a9d7-10316c65601e                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Here is the FTN Month-9 briefing for the `integration_m1_m9_eurusd` fixture:
+
+**Candidate Modules with State and Reason:**
+
+| Module | State      | Eligible | Reason                           | Origin    
+|
+|--------|------------|----------|----------------------------------|-----------
+-----------|
+| REV    | ineligible | False    | no_named_extreme_plus_htf_context | 
+ict_source          |
+| CONSO  | ineligible | False    | box_null                         | ict_source
+|
+| PIP20  | ineligible | False    | profile=unclear                  | 
+hermes_interpretation|
+| BB     | ineligible | False    | missing_iof_or_judas_or_engine   | ict_source
+|
+| FTN    | annotate   | False    | objectives_only                  | 
+hermes_governance   |
+
+**Summary:**  
+All candidate modules are marked as ineligible or annotate only. No entry ticket
+is generated — this is a research log only. The briefing indicates no four-count
+is present (missing previous_day or last), and the evidence shows no named 
+extreme plus HTF context, null boxes, unclear profiles, and missing 
+IOF/Judas/Engine elements.
+
+[exit code: 0]

@@ -1,0 +1,44 @@
+$ agentcore invoke --agent ict_agent_lab '{"prompt": "Long NQ: entry 18000, stop 17980, target 18060. What is my risk, reward and R multiple?", "customer_id": "CUST-LAB-XXXXXXXXXXXX", "session_id": "t7"}' --session-id lab-test7_risk_reward-1790417735-XXXXXXXXXXXX00000000
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session: lab-test7_risk_reward-1790417735-XXXXXXXXXXXX00000000               │
+│ Request ID: 49324fb8-cbe9-4a38-b247-cbf53563462f                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Your trade setup is **long**:
+- **Entry**: 18,000  
+- **Stop-loss**: 17,980  
+- **Target**: 18,060  
+
+**Risk/Reward Analysis**:
+- **Risk**: $20 per contract  
+- **Reward**: $60 per contract  
+- **R multiple**: 3.0  
+
+This means you stand to gain three times your risk if the trade reaches target.
+
+[exit code: 0]

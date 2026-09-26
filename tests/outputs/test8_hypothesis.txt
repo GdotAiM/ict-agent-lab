@@ -1,0 +1,65 @@
+$ agentcore invoke --agent ict_agent_lab '{"prompt": "Does NQ retrace to the NY midnight open during the 10-11am NY Silver Bullet window?", "customer_id": "CUST-LAB-XXXXXXXXXXXX", "session_id": "t8"}' --session-id lab-test8_hypothesis-1790417744-XXXXXXXXXXXX00000000
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session: lab-test8_hypothesis-1790417744-XXXXXXXXXXXX00000000                │
+│ Request ID: 8bf2c710-776e-423a-9a61-37cb1c64912c                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Perfect — here's your structured research hypothesis, ready for testing:
+
+**Hypothesis:**  
+On NQ, price trades to the opening price of the 00:00 (New York time) candle for
+that day during the 10:00-11:00 America/New_York window on more sessions than it
+does in a comparable baseline window.
+
+**Instrument:** NQ  
+**Observable Condition:** Within 10:00-11:00 America/New_York, at least one NQ 
+price print touches or crosses the opening price of the 00:00 (New York time) 
+candle for that day.
+
+**Invalidation Condition:** Over the agreed sample, the touch rate inside 
+10:00-11:00 America/New_York is not higher than the baseline window's touch rate
+by the pre-agreed margin, or the result does not hold out of sample.
+
+**Measurement Window:**  
+- **Start:** 10:00 America/New_York  
+- **End:** 11:00 America/New_York  
+- **Label:** Silver Bullet window
+
+**Required Evidence:**  
+- Intraday NQ OHLC data (e.g., 1-minute) with timestamps converted to 
+America/New_York  
+- The opening price of the 00:00 (New York time) candle for each session  
+- Per-session flag: condition met inside the window (yes/no)  
+- Same flag for a baseline window of equal length on the same sessions  
+- Fixed sample definition (date range, session filters, excluded days)  
+- Touch-rate comparison with counts, plus an out-of-sample check
+
+You can now proceed to gather the data and run the test. Let me know if you need
+help setting up the baseline or the tolerance rules!
+
+[exit code: 0]

@@ -1,0 +1,43 @@
+$ agentcore invoke --agent ict_agent_lab '{"prompt": "Do you remember my name and communication preference?", "customer_id": "CUST-LAB-XXXXXXXXXXXX", "session_id": "s-B"}' --session-id lab-test4b_memory_recall-1790417624-XXXXXXXXXXXX00000000
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session: lab-test4b_memory_recall-1790417624-XXXXXXXXXXXX00000000            │
+│ Request ID: 3a8a8288-3cc0-4d10-9cf3-89e86bc3d9de                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+I don't currently have any stored information about your identity or 
+preferences. To help you better, I would need you to share your name and any 
+communication preferences (like tone, format, etc.) you'd like me to use.
+
+Could you please share:
+- Your name
+- Any specific way you'd like me to communicate with you (e.g., formal/informal,
+concise/detailed, etc.)
+
+Once you share this, I'll remember it for our conversation!
+
+[exit code: 0]

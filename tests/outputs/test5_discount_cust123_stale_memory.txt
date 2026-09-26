@@ -1,0 +1,48 @@
+$ agentcore invoke --agent ict_agent_lab '{"prompt": "I am a Gold member with 4250 points. Calculate my discount on a $150 standard order.", "customer_id": "CUST-123", "session_id": "t5b"}' --session-id lab-test5_discount_cust123_stale_memory-1790417644-XXXXXXXXXXXX00000000
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session:                                                                     │
+│ lab-test5_discount_cust123_stale_memory-1790417644-XXXXXXXXXXXX00000000      │
+│ Request ID: 6a2677c1-712a-419d-a41d-99c96013c351                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+### Your Loyalty Discount Calculation
+
+As a **Gold** member with **4,250 points**, your discount on a **$150 standard 
+order** breaks down as follows:
+
+- **Points Redeemed:** 4,000 points  
+- **Points Value:** $40.00  
+- **Gold Tier Discount:** 10% of order total ($15.00)  
+- **Total Savings:** $51.00  
+
+**Final Total After Discount:** **$99.00**
+
+You will also earn **150 points** from this purchase, leaving you with **400 
+points** remaining.
+
+[exit code: 0]

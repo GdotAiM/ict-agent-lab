@@ -1,0 +1,53 @@
+$ agentcore invoke --agent ict_agent_lab '{"prompt": "Run the FTN workflow on the sample_eurusd fixture. Give me the chosen family, the four levels, PD-array confluence, NO-TRADE reasons and the paper ticket kind.", "customer_id": "CUST-LAB-XXXXXXXXXXXX", "session_id": "t9"}' --session-id lab-test9_ftn_workflow-1790417757-XXXXXXXXXXXX00000000
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session: lab-test9_ftn_workflow-1790417757-XXXXXXXXXXXX00000000              │
+│ Request ID: 54812da8-3c66-424b-b414-6a8e8503bd63                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Here are the results from the FTN workflow on the sample_eurusd fixture:
+
+**Chosen family:** cbdr
+
+**Four levels:**
+- L1 `cbdr_dn_0` @ 1.08710
+- L2 `cbdr_dn_1` @ 1.08380
+- L3 `cbdr_dn_2` @ 1.08050
+- L4 `cbdr_dn_3` @ 1.07720
+
+**PD-array confluence:**
+- cbdr_dn_0 × D_FVG_bear (FVG)
+
+**NO-TRADE reasons:**
+- none (candidate)
+
+**Paper ticket kind:** entry_candidate
+
+The ticket is ready for MINT allowlist and risk assessment before paper 
+acknowledgment.
+
+[exit code: 0]
