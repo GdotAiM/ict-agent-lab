@@ -60,6 +60,8 @@ from ict_lab.models import (
     validate_to_json, validation_error_json,
 )
 from ict_lab.loyalty import compute_loyalty_discount, normalize_category, normalize_tier
+from ict_lab.ict_tools import hypothesis_json, risk_reward_json
+from typing import List, Optional
 
 
 logging.basicConfig(level=logging.WARNING)
@@ -343,6 +345,75 @@ print(json.dumps(result, indent=2))
         return validate_to_json(LoyaltyDiscountResult, fallback)
 
 
+# -- LAB -- ICT research tools ------------------------------------------------
+@tool
+def calculate_risk_reward(
+    entry: float,
+    stop_loss: float,
+    target: float,
+    direction: Optional[str] = None,
+) -> str:
+    """
+    Calculate risk, reward and R multiple for a trade idea (price points per unit).
+    Validates that the stop and target are on the correct side for the direction.
+
+    Args:
+        entry: Entry price
+        stop_loss: Stop-loss price
+        target: Target (take-profit) price
+        direction: "long" or "short"; inferred from the stop if omitted
+
+    Returns:
+        RiskReward JSON (direction, entry, stop_loss, target, risk, reward, r_multiple)
+        or an {"error": ...} JSON
+    """
+    return risk_reward_json(entry, stop_loss, target, direction)
+
+
+@tool
+def build_research_hypothesis(
+    question: str,
+    hypothesis: Optional[str] = None,
+    instrument: Optional[str] = None,
+    observable_condition: Optional[str] = None,
+    invalidation_condition: Optional[str] = None,
+    window_start: Optional[str] = None,
+    window_end: Optional[str] = None,
+    timezone: Optional[str] = None,
+    required_evidence: Optional[List[str]] = None,
+) -> str:
+    """
+    Turn a trading research question into a structured, testable ResearchHypothesis.
+    Pass the user's question; instrument, time window (HH:MM 24h) and timezone are
+    parsed from it when possible. Optional arguments override the parsed/default text.
+    This does NOT answer the question -- it defines how to test it.
+
+    Args:
+        question: The research question, verbatim
+        hypothesis: Optional one-sentence falsifiable hypothesis
+        instrument: Optional instrument symbol, e.g. NQ
+        observable_condition: Optional condition that can be measured in data
+        invalidation_condition: Optional result that would reject the hypothesis
+        window_start: Optional window start, HH:MM 24h
+        window_end: Optional window end, HH:MM 24h
+        timezone: Optional IANA timezone, e.g. America/New_York
+        required_evidence: Optional list of data/evidence needed
+
+    Returns:
+        ResearchHypothesis JSON or an {"error": ...} JSON
+    """
+    overrides = {
+        k: v for k, v in dict(
+            hypothesis=hypothesis, instrument=instrument,
+            observable_condition=observable_condition,
+            invalidation_condition=invalidation_condition,
+            window_start=window_start, window_end=window_end,
+            timezone=timezone, required_evidence=required_evidence,
+        ).items() if v
+    }
+    return hypothesis_json(question, **overrides)
+
+
 # -- TODO 8 -- Agent Entrypoint -----------------------------------------------
 SYSTEM_PROMPT = """You are a customer support agent for an Amazon store, running in a personal
 lab build that is also being extended into an ICT trading research assistant. You help customers with:
@@ -358,6 +429,16 @@ You have access to:
 - A code interpreter for precise loyalty discount calculations
 - A browser for looking up live web information
 - Persistent memory across sessions to remember customer identity and preferences
+- ICT research tools: calculate_risk_reward (risk, reward, R multiple) and
+  build_research_hypothesis (structured, testable research hypothesis)
+
+ICT RESEARCH RULES:
+- For trade risk/reward questions always call calculate_risk_reward and report its
+  risk, reward and r_multiple exactly. If it returns an error, explain the error.
+- For research questions call build_research_hypothesis and present the hypothesis,
+  instrument, observable condition, invalidation condition, measurement window (with
+  timezone) and required evidence. Do not claim the hypothesis is true or false;
+  you have no market data. This is research tooling, not financial advice.
 
 SOURCE-OF-TRUTH RULES (always follow):
 1. Current tool results win. Prices, order totals, discounts, final totals, points,
@@ -403,7 +484,10 @@ async def invoke(payload, context=None):
 
     agent_core_browser = AgentCoreBrowser(region=REGION)
 
-    tools = [search_knowledge_base, calculate_loyalty_discount, agent_core_browser.browser]
+    tools = [
+        search_knowledge_base, calculate_loyalty_discount, agent_core_browser.browser,
+        calculate_risk_reward, build_research_hypothesis,
+    ]
 
     client = MCPClient(
         lambda: streamable_http_client(url=GATEWAY_URL)
