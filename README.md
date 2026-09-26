@@ -12,6 +12,8 @@ validated outputs, conversation summarisation and research tooling.
 > reconfigured or redeployed from here. The Knowledge Base, Memory and Gateway from the
 > course are **reused read-only**; no course Lambda or Gateway target was changed.
 
+For a section-by-section comparison with the graded submission, see [`docs/DIVERGENCE.md`](docs/DIVERGENCE.md).
+
 ## Architecture
 
 ```
