@@ -1,0 +1,41 @@
+
+⚠️ Recommendation: The Starter Toolkit CLI is no longer supported.
+   Please use the AgentCore CLI (@aws/agentcore) to create, develop, and deploy 
+agents on Amazon Bedrock AgentCore.
+   New Bedrock AgentCore features are only accessible in the AgentCore CLI.
+
+   To uninstall this starter toolkit, run: pip uninstall 
+bedrock-agentcore-starter-toolkit
+   To install the AgentCore CLI: npm install -g @aws/agentcore
+   To import existing agents, run: agentcore import
+   Set AGENTCORE_SUPPRESS_RECOMMENDATION=1 to silence this warning.
+
+╭─────────────────────────────── ict_agent_lab ────────────────────────────────╮
+│ Session: t1-rerun-session-XXXXXXXXXXXXXXXXXXXXXXXX7868                       │
+│ Request ID: b8f2733d-2089-4de7-93a4-0783655439f1                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/ict_agent_lab-OX4zD │
+│ kCZNp                                                                        │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/ict_agent_lab-OX4zDkCZNp-DEFAULT             │
+│ --log-stream-name-prefix "2026/09/26/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Your order **ORD-001** for the **Wireless Headphones Pro** is currently 
+**SHIPPED**. Here are the details:
+
+- **Order Total:** $89.99  
+- **Carrier:** UPS  
+- **Tracking Number:** TRK987654321  
+- **Estimated Delivery:** September 28, 2026  
+
+You can use the tracking number with UPS to monitor its progress. Let me know if
+you need further assistance!
+

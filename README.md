@@ -166,11 +166,11 @@ ID shows as `CUST-LAB-XXXXXXXXXXXX`.
 
 | # | Scenario | Customer | Expected | Result |
 |---|----------|----------|----------|--------|
-| 1 | Track ORD-001 | CUST-123 | SHIPPED, UPS, $89.99 | ❌ **FAIL**: `RuntimeClientError ... Received error (500) from runtime`. This was the first invocation straight after deploy + `setup_permissions`. Likely cause: cold start or IAM propagation, since the same `get_order` path worked 20 s later inside T2's refund. CloudWatch logs not checked yet; needs a re-run. |
+| 1 | Track ORD-001 | CUST-123 | SHIPPED, UPS, $89.99 | ✅ PASS on re-run (`tests/outputs/rerun_t1.txt`): SHIPPED, UPS, TRK987654321, $89.99, ETA 28 Sep 2026. The first attempt returned a 500 right after deploy (likely cold start / IAM propagation). |
 | 2 | Refund ORD-002 | CUST-123 | refund **$139.99** (not $0) | ✅ PASS: REF-RISFUSK6, **$139.99**, APPROVED (the course run refunded $0) |
 | 3 | Platinum benefits (KB) | CUST-123 | KB tier benefits | ✅ PASS: free same-day shipping, 15% discount, priority support, 5,000+ points |
 | 4a | Memory store | fresh id | acknowledges Jane / concise | ✅ PASS: "Hello Jane! I'll keep my responses concise for you." |
-| 4b | Memory recall (60 s later) | fresh id | recalls "Jane", concise | ❌ **FAIL**: "I don't currently have any stored information about your identity or preferences." Likely cause: long-term memory extraction wasn't finished after 60 s, or a new-role permission hadn't propagated yet. Retrieval itself works (T3 used CUST-123's stored context). Needs a re-run with a longer wait. |
+| 4b | Memory recall | fresh id | recalls "Jane", concise | ✅ PASS on re-run with a 150 s wait (`tests/outputs/rerun_t4a.txt`, `rerun_t4b.txt`): "Yes, I remember your name is Jane, and you prefer concise responses." The first run waited only 60 s, before long-term memory extraction had finished. |
 | 5 | Gold, 4250 pts, $150 | fresh id | 4000 pts, 10%, **$99.00**, 400 remaining | ✅ PASS: 4,000 pts = $40, savings $51.00, **final $99.00**, +150 earned, **400 remaining**. Presentation nit: it labels the Gold discount "$15.00", but the validated tool output is $11.00 (10% of the $110 post-points subtotal). |
 | 5b | Same, stale memory | CUST-123 | **$99.00** (tool beats memory) | ✅ PASS (source-of-truth fix): **final $99.00**, 400 remaining, no mention of the old $95. Same "$15.00" label nit. |
 | 6 | Browser page title | CUST-123 | udacity.com title | ✅ PASS: "Learn the Latest Tech Skills; Advance Your Career \| Udacity" |
