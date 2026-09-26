@@ -30,4 +30,6 @@ run test5_discount_cust123_stale_memory.txt '{"prompt": "I am a Gold member with
 run test6_browser.txt '{"prompt": "Go to https://www.udacity.com and tell me the page title.", "customer_id": "CUST-123", "session_id": "t6"}'
 run test7_risk_reward.txt "{\"prompt\": \"Long NQ: entry 18000, stop 17980, target 18060. What is my risk, reward and R multiple?\", \"customer_id\": \"$FRESH\", \"session_id\": \"t7\"}"
 run test8_hypothesis.txt "{\"prompt\": \"Does NQ retrace to the NY midnight open during the 10-11am NY Silver Bullet window?\", \"customer_id\": \"$FRESH\", \"session_id\": \"t8\"}"
+run test9_ftn_workflow.txt "{\"prompt\": \"Run the FTN workflow on the sample_eurusd fixture. Give me the chosen family, the four levels, PD-array confluence, NO-TRADE reasons and the paper ticket kind.\", \"customer_id\": \"$FRESH\", \"session_id\": \"t9\"}"
+run test10_ftn_briefing.txt "{\"prompt\": \"Give me the FTN Month-9 briefing for the integration_m1_m9_eurusd fixture and list each candidate module with its state and reason.\", \"customer_id\": \"$FRESH\", \"session_id\": \"t10\"}"
 echo "fresh customer id: $FRESH"

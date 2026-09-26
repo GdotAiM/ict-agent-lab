@@ -30,7 +30,9 @@ agentcore invoke --agent ict_agent_lab '{"prompt", "customer_id", "session_id"}'
 │   │                             → RefundRequest(amount>0) / RefundResult (Pydantic)   │
 │   ├── other Gateway tools (get_customer, get_customer_orders, refund status, label)   │
 │   ├── calculate_risk_reward ──► pure Python → RiskReward (Pydantic)                   │
-│   └── build_research_hypothesis ► pure Python → ResearchHypothesis (Pydantic)         │
+│   ├── build_research_hypothesis ► pure Python → ResearchHypothesis (Pydantic)         │
+│   └── ftn_run_workflow / ftn_briefing / ftn_list_fixtures                              │
+│         ► vendored FTN package (PAPER only) → FtnWorkflowResult / FtnBriefing          │
 └───────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -44,6 +46,8 @@ Code layout:
 | `ict_lab/loyalty.py` | Pure-Python loyalty maths (Code Interpreter fallback + tests) |
 | `ict_lab/ict_tools.py` | Risk/reward and research-hypothesis logic |
 | `ict_lab/memory_utils.py` | Memory context header + money redaction |
+| `ict_lab/ftn_bridge.py`, `ict_lab/ftn_models.py` | FTN glue (charter checks, fixture confinement, output redirection) + Pydantic models |
+| `vendor/ftn-agent/` | My FTN project, vendored **unchanged** (src, fixtures, tests, config; docs/desk omitted) |
 | `lambda/` | Course Lambdas (unchanged); `lambda/lab/` = refund Lambda copy requiring `amount > 0` (**not deployed**) |
 | `docs/ict_glossary.md` | Optional, user-editable ICT glossary (not ingested into the KB) |
 | `scripts/` | `deploy_lab.sh`, `run_scenarios.sh`, `cleanup_lab.sh` |
@@ -82,6 +86,38 @@ Code layout:
   instrument / window / timezone from the question; the agent can override any field. It
   structures a test — it does not claim the idea is true.
 
+### FTN (Filling The Numbers) integration — PAPER only
+
+[FTN](vendor/ftn-agent/AGENT.md) is my ICT daily-range workflow package (sibling of
+`GdotAiM/mint-agent`). It's vendored unchanged under `vendor/ftn-agent/` and exposed to the agent
+through three tools:
+
+- **`ftn_run_workflow(fixture="sample_eurusd", bias="auto", price=None, pack_json=None)`** runs
+  FTN's `run_workflow` (PREP→FILTER→WATCH→GATE→MANAGE→JOURNAL) and returns a validated
+  `FtnWorkflowResult`. That holds the four measurement families (0-GMT pivots, CBDR, Asian,
+  Flout), the four-level count, PD-array confluence, the NO-TRADE filter (`no_trade_reasons`),
+  the paper ticket and the decision-journal markdown.
+- **`ftn_briefing(fixture="integration_m1_m9_eurusd")`** returns FTN's Month-9 DTR briefing and
+  candidate log as a validated `FtnBriefing`.
+- **`ftn_list_fixtures()`** lists the fixtures.
+
+FTN's own contracts (`ftn.os.contracts`) are frozen dataclasses for the briefing path. The
+workflow ticket is a plain dict, so the lab mirrors it in Pydantic (`ict_lab/ftn_models.py`).
+
+How the charter is enforced in the glue:
+- It only runs when FTN's `config.yaml` says `mode: paper` and `live_enabled: false`, and
+  `FTN_LIVE` is not `1`. `FtnTicket` also requires `mode == "paper"` and `live_enabled is False`,
+  plus NO-TRADE consistency: compressed days, no PD overlap or an incomplete gate all mean
+  `no_trade`.
+- It never imports `ftn.adapters` (no quotes, no brokers). `orders_placed` is always 0, and
+  tickets are research artefacts only.
+- Fixture names are limited to FTN's `fixtures/` folder. Inline packs are validated with
+  `FtnInputPack`.
+- FTN's `dispatch/` and journal writes are redirected to a temp work dir (`FTN_LAB_WORKDIR`,
+  default `/tmp/ftn_lab`), so nothing gets written into the vendored tree or the read-only
+  runtime code dir.
+- Risk caps in `vendor/ftn-agent/config.yaml` are unchanged, and a test checks this.
+
 ## How to run
 
 ```bash
@@ -102,12 +138,19 @@ Resource IDs (`GATEWAY_URL`, `KB_ID`, `REGION`, `MEMORY_ID`) are literals in `ma
 
 ### Unit tests (pytest)
 
-**70 passed** — see [`tests/outputs/pytest.txt`](tests/outputs/pytest.txt). Covers model
+**89 passed** — see [`tests/outputs/pytest.txt`](tests/outputs/pytest.txt). Covers model
 validation (valid/invalid orders, refund amount > 0, loyalty consistency checks, timezone and
 window rules), risk/reward edge cases (wrong-side stop/target, zero risk, direction inference
 and aliases, rounding), hypothesis parsing/overrides/failures, gateway payload parsing, memory redaction, and an
 offline wiring test of `invoke()` with a fake Gateway (refund passes the order total,
-bad amounts never reach `initiate_refund`, SummarizingConversationManager attached).
+bad amounts never reach `initiate_refund`, SummarizingConversationManager attached), plus 19 FTN integration tests (sample
+workflow, NO-TRADE paths, charter refusals, fixture confinement, briefing).
+
+FTN's own suite (`cd vendor/ftn-agent && pytest`): **132 passed** in this environment. See
+[`tests/outputs/ftn_own_pytest.txt`](tests/outputs/ftn_own_pytest.txt). Local (offline) FTN
+tool calls are in [`tests/outputs/ftn_local_tool_calls.txt`](tests/outputs/ftn_local_tool_calls.txt):
+`sample_eurusd` gives an `entry_candidate`, bearish, CBDR family, 4 levels
+(1.08710 / 1.08380 / 1.08050 / 1.07720), 1 PD confluence, ATR 74 pips, no NO-TRADE reasons, paper.
 
 ### Deployed scenarios (`ict_agent_lab`)
 
@@ -122,6 +165,8 @@ bad amounts never reach `initiate_refund`, SummarizingConversationManager attach
 | 6 | Browser page title | CUST-123 | udacity.com title | _not run yet_ |
 | 7 | Risk/reward long NQ 18000/17980/18060 | fresh id | risk 20, reward 60, **3R** | _not run yet_ |
 | 8 | Silver Bullet hypothesis | fresh id | NQ, 10:00–11:00 America/New_York | _not run yet_ |
+| 9 | FTN workflow on `sample_eurusd` | fresh id | entry_candidate, CBDR, 4 levels, paper | _not run yet_ |
+| 10 | FTN briefing `integration_m1_m9_eurusd` | fresh id | EURUSD 2017-01-18, 5 candidates | _not run yet_ |
 
 _The deployment and scenario runs have not been done yet (no AWS credentials were
 available in the build session). Run `./scripts/deploy_lab.sh` and
@@ -134,6 +179,7 @@ available in the build session). Run `./scripts/deploy_lab.sh` and
 ```
 
 - Run this **only in this repo**. Never run `agentcore destroy` in the course repo.
+- FTN writes only to the temp work dir inside the runtime. Nothing needs cleaning up in AWS.
 - If you deploy the optional lab Lambda (`refund-processor-lab`) and a `-lab` Gateway target
   or Gateway, delete those too. The reused KB, Memory and course Gateway belong to the course
   project; do not delete them from here.
