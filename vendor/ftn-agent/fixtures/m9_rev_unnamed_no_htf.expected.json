@@ -1,0 +1,11 @@
+{
+  "fixture": "fixtures/m9_rev_unnamed_no_htf.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_candidate_states": {
+    "REV": "ineligible",
+    "CONSO": "ineligible",
+    "PIP20": "ineligible",
+    "BB": "unevaluated",
+    "FTN": "annotate"
+  }
+}

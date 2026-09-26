@@ -1,0 +1,56 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-01-18",
+  "focus_pair": "EURUSD",
+  "last": 1.066,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "bullish"
+    },
+    "state": "bullish"
+  },
+  "origin_pd_array": "M_OB_bull",
+  "ipda_days": 60,
+  "quarterly_shift": {
+    "state": "in_progress",
+    "lookback_months": 3,
+    "direction": "bullish"
+  },
+  "evidence": {
+    "notes": "M5 evidence S2. Labeled quarterly + IPDA only.",
+    "open_float": {
+      "buy_side": "present",
+      "sell_side": "absent"
+    },
+    "open_float_pools": {
+      "pool_ids": [
+        "IPDA60L"
+      ]
+    },
+    "institutional_swing": {
+      "kind": "breaker_swing_point",
+      "entry_annotation": "turtle_soup"
+    },
+    "confirming": {
+      "seasonal_tendency": "bullish",
+      "intermarket": true,
+      "ten_year_notes": false,
+      "ten_year_yields": false,
+      "interest_rate_differentials": false
+    },
+    "htf_pd": {
+      "dealing_range_tf": "monthly",
+      "nearest_premium_id": "M_OH",
+      "nearest_discount_id": "M_OB_bull"
+    },
+    "setup": {
+      "setup_progression": "watching",
+      "entry_technique": "limit",
+      "position_management": "none"
+    }
+  }
+}

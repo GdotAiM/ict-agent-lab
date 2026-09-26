@@ -1,0 +1,138 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-04-12",
+  "focus_pair": "EURUSD",
+  "last": 1.0614,
+  "timezone": "America/New_York",
+  "calendar": [],
+  "watchlist": [
+    "EURUSD"
+  ],
+  "opens": {
+    "gmt0": 1.0598,
+    "ny_midnight": 1.0599
+  },
+  "ranges": {
+    "previous_day": {
+      "high": 1.0621,
+      "low": 1.0574,
+      "close": 1.0598
+    },
+    "asian": {
+      "high": 1.0611,
+      "low": 1.0592
+    },
+    "cbdr": {
+      "high": 1.0608,
+      "low": 1.0582
+    },
+    "named_extremes": {
+      "pdh": 1.0621,
+      "pdl": 1.0574
+    }
+  },
+  "adr5": {
+    "high": 1.064,
+    "low": 1.056,
+    "remaining": 55
+  },
+  "pair_institutional": {
+    "sponsorship": {
+      "weekly": "bearish",
+      "daily": "bearish",
+      "h4": "bearish"
+    },
+    "daytrade_iof": {
+      "daily": "bearish",
+      "h4": "bearish",
+      "m60": "bearish"
+    }
+  },
+  "dxy": {
+    "relationship": "supportive",
+    "from": "discount",
+    "institutional": {
+      "state": "bullish"
+    }
+  },
+  "sentiment": {
+    "direction": "bearish",
+    "expected_delivery": "lower",
+    "indicator": {
+      "value": -22.0,
+      "state": "bearish"
+    },
+    "reference_open": "gmt0",
+    "asian_range": {
+      "high": 1.0611,
+      "low": 1.0592
+    },
+    "liquidity_probe": {
+      "preferred_side": "buy_side",
+      "observed_side": "buy_side"
+    },
+    "judas_side": "buy_side",
+    "reaction": {
+      "pd_array_reaction": "pending"
+    }
+  },
+  "origin_pd_array": "D_FVG_bear",
+  "opposing_target_arrays": [
+    "PDL"
+  ],
+  "scenarios": {
+    "primary": "London normal protraction sell: rally after 00:00 NY into CBDR/Asian high, then delivery lower toward daily discount.",
+    "contrary": "Acceptance above projected 2SD high / failure to leave the buy-side probe."
+  },
+  "evidence": {
+    "session": "london",
+    "notes": "M8 KNOWN-STATE reconstruction fixture (Slice 1). Not evidence-only: gate/profile/opportunity/projection are provided state. No pick/expected_winner.",
+    "fixture_kind": "known_state"
+  },
+  "month8": {
+    "asian_height_pips": 19,
+    "cbdr": {
+      "height_pips": 26,
+      "body_height_pips": 24,
+      "body_high": 1.0606,
+      "body_low": 1.0582,
+      "wick_high": 1.0608,
+      "wick_low": 1.0581
+    },
+    "london_session_gate": {
+      "allowed": true,
+      "reason": null
+    },
+    "ict_london_profile": "normal_protraction_sell",
+    "daily_extreme_projection": {
+      "draw": "high",
+      "source_range": "cbdr",
+      "sd_levels": [
+        {
+          "sd": 1,
+          "price": 1.0634
+        },
+        {
+          "sd": 2,
+          "price": 1.066
+        },
+        {
+          "sd": 3,
+          "price": 1.0686
+        }
+      ],
+      "selected_level": 1.0634,
+      "basis": [
+        "bearish_iof",
+        "sell_day_projects_high"
+      ]
+    },
+    "daytrade_opportunity": true,
+    "htf_entry_overlap": {
+      "present": true,
+      "array_id": "D_FVG_bear",
+      "timeframe": "daily",
+      "relationship": "seed_only"
+    }
+  }
+}

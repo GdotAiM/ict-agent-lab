@@ -1,0 +1,85 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-03-14",
+  "focus_pair": "EURUSD",
+  "last": 1.0662,
+  "timezone": "America/New_York",
+  "calendar": [],
+  "watchlist": [
+    "EURUSD"
+  ],
+  "opens": {
+    "gmt0": 1.0648,
+    "ny_midnight": 1.065
+  },
+  "ranges": {
+    "previous_day": {
+      "high": 1.0681,
+      "low": 1.0624,
+      "close": 1.0648
+    },
+    "named_extremes": {
+      "pdh": 1.0681,
+      "pdl": 1.0624
+    }
+  },
+  "pair_institutional": {
+    "sponsorship": {
+      "weekly": "bullish",
+      "daily": "bullish",
+      "h4": "bullish"
+    },
+    "daytrade_iof": {
+      "daily": "bullish",
+      "h4": "bullish",
+      "m60": "unclear"
+    },
+    "state": "bullish"
+  },
+  "origin_pd_array": "W_FVG_bull",
+  "opposing_target_arrays": [
+    "WPH"
+  ],
+  "scenarios": {
+    "primary": "KNOWN-STATE M7 schema fixture. Not detector proof.",
+    "contrary": "Wednesday weekly reversal if Tue low fails."
+  },
+  "evidence": {
+    "notes": "M7 KNOWN-STATE. Profile/template/opportunity are provided. No pick."
+  },
+  "month7": {
+    "dealing_range": {
+      "from_array_id": "M_DISCOUNT",
+      "from_tf": "monthly",
+      "to_array_id": "W_PREMIUM",
+      "to_tf": "weekly",
+      "direction": "bullish"
+    },
+    "ict_weekly_profile": {
+      "name": "classic_tuesday_low_of_week",
+      "state": "watching"
+    },
+    "manipulation_template": {
+      "name": "classic_tuesday_low_liquidity_pool",
+      "pool_tf": "weekly"
+    },
+    "ipda_window": {
+      "days": 20
+    },
+    "lrlr": {
+      "state": "low"
+    },
+    "intraweek_contrary": {
+      "state": "watch"
+    },
+    "osok_opportunity": {
+      "flag": true,
+      "reason": "provided_state"
+    },
+    "swing_ticket": null,
+    "ict_guidance": {
+      "weekly_extreme_mon_wed": "often ~70-76%",
+      "note": "guidance not hermes_governance"
+    }
+  }
+}

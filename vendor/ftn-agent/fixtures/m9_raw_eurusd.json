@@ -1,0 +1,265 @@
+{
+  "date": "2017-05-30",
+  "symbol": "EURUSD",
+  "timezone": "America/New_York",
+  "last": 1.1184,
+  "focus_pair": "EURUSD",
+  "calendar": [
+    {
+      "when": "03:00",
+      "impact": "medium",
+      "pair": "EURUSD",
+      "killzone": "london"
+    }
+  ],
+  "watchlist": [],
+  "dxy": {
+    "from": "premium",
+    "institutional": {
+      "sponsorship": {
+        "monthly": "bearish",
+        "weekly": "bearish",
+        "daily": "bearish",
+        "h4": "bearish"
+      },
+      "daytrade_iof": {
+        "daily": "bearish",
+        "h4": "bearish",
+        "m60": "bearish"
+      },
+      "state": "bearish",
+      "confidence": "aligned"
+    }
+  },
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "bullish",
+      "weekly": "bullish",
+      "daily": "bullish",
+      "h4": "bullish"
+    },
+    "daytrade_iof": {
+      "daily": "bullish",
+      "h4": "bullish",
+      "m60": "bearish"
+    }
+  },
+  "opens": {
+    "gmt0": 1.1168,
+    "ny_midnight": 1.1169
+  },
+  "ranges": {
+    "previous_day": {
+      "high": 1.1211,
+      "low": 1.1142,
+      "close": 1.1174
+    },
+    "asian": {
+      "high": 1.1176,
+      "low": 1.1151
+    },
+    "cbdr": {
+      "high": 1.1182,
+      "low": 1.1158
+    },
+    "flout": {
+      "high": 1.1194,
+      "low": 1.1149
+    },
+    "swings_3d": {
+      "high": 1.123,
+      "low": 1.1128
+    },
+    "named_extremes": {
+      "pdh": 1.1211,
+      "pdl": 1.1142,
+      "week_so_far_high": 1.1211
+    }
+  },
+  "adr5": {
+    "high": 1.1224,
+    "low": 1.1131,
+    "remaining": 40
+  },
+  "pd_matrix": {
+    "htf": {
+      "daily": [
+        {
+          "id": "D_FVG_bull",
+          "kind": "FVG",
+          "low": 1.1148,
+          "high": 1.1159
+        },
+        {
+          "id": "PDH_liq",
+          "kind": "liquidity",
+          "low": 1.121,
+          "high": 1.1212
+        }
+      ],
+      "h4": [
+        {
+          "id": "H4_OB_bull",
+          "kind": "OB",
+          "low": 1.1152,
+          "high": 1.1164
+        }
+      ]
+    },
+    "ltf": {
+      "m15": [
+        {
+          "id": "M15_FVG_bull",
+          "kind": "FVG",
+          "low": 1.115,
+          "high": 1.1154
+        }
+      ]
+    },
+    "confluences": [
+      {
+        "arrays": [
+          "M15_FVG_bull"
+        ],
+        "with": "asian_low"
+      }
+    ]
+  },
+  "sentiment": {
+    "indicator": {
+      "name": "williams_r",
+      "period": 10,
+      "timeframe": "m15"
+    },
+    "reference_open": "gmt0",
+    "asian_range": {
+      "high": 1.1176,
+      "low": 1.1151
+    },
+    "liquidity_probe": {
+      "observed_side": "sell_side"
+    },
+    "judas_side": "sell_side",
+    "reaction": {
+      "pd_array_reaction": "confirmed"
+    },
+    "basis": [
+      "williams_r",
+      "asian_range",
+      "opening_price",
+      "pd_array",
+      "pair_iof",
+      "dxy"
+    ]
+  },
+  "scenarios": {
+    "primary": "sell-side probe under Asia/open into daily bullish FVG, then delivery higher",
+    "contrary": "acceptance below origin FVG / failure of PD-array reaction"
+  },
+  "evidence": {
+    "session": "london",
+    "london_direction": "bearish_probe",
+    "htf_pd_at_raid": "D_FVG_bull",
+    "notes": "F4: box derived if compression exists."
+  },
+  "bars_m15": [
+    {
+      "t": "2017-05-30T000:00:00Z",
+      "o": 1.1161,
+      "h": 1.11625,
+      "l": 1.11575,
+      "c": 1.116
+    },
+    {
+      "t": "2017-05-30T001:00:00Z",
+      "o": 1.1169,
+      "h": 1.11705,
+      "l": 1.11655,
+      "c": 1.1168
+    },
+    {
+      "t": "2017-05-30T002:00:00Z",
+      "o": 1.1175,
+      "h": 1.11765,
+      "l": 1.11715,
+      "c": 1.1174
+    },
+    {
+      "t": "2017-05-30T003:00:00Z",
+      "o": 1.1183,
+      "h": 1.11845,
+      "l": 1.11795,
+      "c": 1.1182
+    },
+    {
+      "t": "2017-05-30T004:00:00Z",
+      "o": 1.1189,
+      "h": 1.1188,
+      "l": 1.11855,
+      "c": 1.1188
+    },
+    {
+      "t": "2017-05-30T005:00:00Z",
+      "o": 1.118,
+      "h": 1.11815,
+      "l": 1.11765,
+      "c": 1.1179
+    },
+    {
+      "t": "2017-05-30T006:00:00Z",
+      "o": 1.1166,
+      "h": 1.11675,
+      "l": 1.11625,
+      "c": 1.1165
+    },
+    {
+      "t": "2017-05-30T007:00:00Z",
+      "o": 1.1159,
+      "h": 1.11605,
+      "l": 1.11555,
+      "c": 1.1158
+    },
+    {
+      "t": "2017-05-30T008:00:00Z",
+      "o": 1.1153,
+      "h": 1.11545,
+      "l": 1.11495,
+      "c": 1.1152
+    },
+    {
+      "t": "2017-05-30T009:00:00Z",
+      "o": 1.115,
+      "h": 1.11515,
+      "l": 1.1149,
+      "c": 1.1149
+    },
+    {
+      "t": "2017-05-30T10:00:00Z",
+      "o": 1.1152,
+      "h": 1.11535,
+      "l": 1.11485,
+      "c": 1.1151
+    },
+    {
+      "t": "2017-05-30T11:00:00Z",
+      "o": 1.1157,
+      "h": 1.11585,
+      "l": 1.11535,
+      "c": 1.1156
+    },
+    {
+      "t": "2017-05-30T12:00:00Z",
+      "o": 1.1154,
+      "h": 1.1155,
+      "l": 1.1141,
+      "c": 1.1148
+    },
+    {
+      "t": "2017-05-30T12:15:00Z",
+      "o": 1.1148,
+      "h": 1.1172,
+      "l": 1.1147,
+      "c": 1.1169
+    }
+  ]
+}

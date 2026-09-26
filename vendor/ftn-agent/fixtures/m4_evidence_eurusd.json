@@ -1,0 +1,32 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-01-11",
+  "focus_pair": "EURUSD",
+  "last": 1.055,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "origin_pd_array": "D_FVG_bull",
+  "evidence": {
+    "notes": "M4 evidence S2. Labeled catalog only.",
+    "arrays": [
+      {
+        "id": "D_FVG_bull",
+        "kind": "fvg",
+        "polarity": "bullish",
+        "timeframe": "daily"
+      },
+      {
+        "id": "D_VOID_bull",
+        "kind": "liquidity_void",
+        "polarity": "bullish",
+        "timeframe": "daily"
+      }
+    ],
+    "pattern_note": "double_bottom",
+    "confirming": {
+      "interest_rate_effects": false
+    }
+  }
+}

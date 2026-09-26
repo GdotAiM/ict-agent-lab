@@ -1,0 +1,47 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-03-14",
+  "focus_pair": "EURUSD",
+  "last": 1.0662,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "pair_institutional": {
+    "sponsorship": {
+      "weekly": "bullish",
+      "daily": "bullish",
+      "h4": "bullish"
+    },
+    "state": "bullish"
+  },
+  "origin_pd_array": "W_FVG_bull",
+  "opposing_target_arrays": [
+    "WPH"
+  ],
+  "ipda_days": 20,
+  "evidence": {
+    "notes": "M7 path Slice 3. Week-to-date observations. No profile key.",
+    "week_path": {
+      "extreme_low_day": "tuesday",
+      "extreme_high_day": "",
+      "ran_htf_discount_on": "tuesday",
+      "ran_htf_premium_on": "",
+      "monday_hovered_above_discount": true,
+      "monday_hovered_below_premium": false,
+      "lrlr": "low"
+    }
+  },
+  "month7": {
+    "dealing_range": {
+      "from_array_id": "M_DISCOUNT",
+      "from_tf": "monthly",
+      "to_array_id": "W_PREMIUM",
+      "to_tf": "weekly",
+      "direction": "bullish"
+    },
+    "ipda_window": {
+      "days": 20
+    }
+  }
+}

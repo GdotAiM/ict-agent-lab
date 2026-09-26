@@ -1,0 +1,24 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-08-09",
+  "focus_pair": "EURUSD",
+  "last": 1.176,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "M12 KNOWN-STATE. Intermediate none. Schema only."
+  },
+  "month12": {
+    "long_term_note": "present",
+    "intermediate_term_note": "none",
+    "short_term_note": "present",
+    "intraday_note": "present",
+    "identified_top_down": "present",
+    "top_down": {
+      "flag": true,
+      "reason": "provided_state"
+    }
+  }
+}

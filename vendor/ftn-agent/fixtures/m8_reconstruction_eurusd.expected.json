@@ -1,0 +1,19 @@
+{
+  "fixture": "fixtures/m8_reconstruction_eurusd.json",
+  "note": "Gold for known-state fixture. Engine must not open this file.",
+  "expected_month8": {
+    "cbdr_classification": "ideal",
+    "london_allowed": true,
+    "ict_london_profile": "normal_protraction_sell",
+    "draw": "high",
+    "daytrade_opportunity": true,
+    "htf_overlap_present": true,
+    "hermes_profile_not_equal_to_london_profile": true
+  },
+  "expected_market_read": {
+    "sentiment": "bearish",
+    "daytrade_iof": "bearish",
+    "hermes_profile_may_be": "unclear"
+  },
+  "fixture_kind": "known_state"
+}

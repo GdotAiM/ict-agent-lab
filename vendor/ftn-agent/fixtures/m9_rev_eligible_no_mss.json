@@ -1,0 +1,184 @@
+{
+  "date": "2017-06-02",
+  "symbol": "EURUSD",
+  "timezone": "America/New_York",
+  "last": 1.1184,
+  "focus_pair": "EURUSD",
+  "calendar": [
+    {
+      "when": "03:00",
+      "impact": "medium",
+      "pair": "EURUSD",
+      "killzone": "london"
+    }
+  ],
+  "watchlist": [],
+  "dxy": {
+    "from": "premium",
+    "relationship": "supportive",
+    "institutional": {
+      "sponsorship": {
+        "monthly": "bearish",
+        "weekly": "bearish",
+        "daily": "bearish",
+        "h4": "bearish"
+      },
+      "daytrade_iof": {
+        "daily": "bearish",
+        "h4": "bearish",
+        "m60": "bearish"
+      },
+      "state": "bearish",
+      "confidence": "aligned"
+    }
+  },
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "bullish",
+      "weekly": "bullish",
+      "daily": "bullish",
+      "h4": "bullish"
+    },
+    "daytrade_iof": {
+      "daily": "bullish",
+      "h4": "bullish",
+      "m60": "bearish"
+    },
+    "state": "bullish",
+    "confidence": "qualified",
+    "notes": [
+      "m60_countertrend"
+    ]
+  },
+  "origin_pd_array": "D_FVG_bull",
+  "opposing_target_arrays": [
+    "PDH",
+    "WSH",
+    "FTN_cbdr_up_1"
+  ],
+  "opens": {
+    "gmt0": 1.1168,
+    "ny_midnight": 1.1169
+  },
+  "ranges": {
+    "previous_day": {
+      "high": 1.1211,
+      "low": 1.1142,
+      "close": 1.1174
+    },
+    "asian": {
+      "high": 1.1176,
+      "low": 1.1151
+    },
+    "cbdr": {
+      "high": 1.1182,
+      "low": 1.1158
+    },
+    "flout": {
+      "high": 1.1194,
+      "low": 1.1149
+    },
+    "swings_3d": {
+      "high": 1.123,
+      "low": 1.1128
+    },
+    "named_extremes": {
+      "pdh": 1.1211,
+      "pdl": 1.1142,
+      "week_so_far_high": 1.1211
+    }
+  },
+  "adr5": {
+    "high": 1.1224,
+    "low": 1.1131,
+    "remaining": 40
+  },
+  "pd_matrix": {
+    "htf": {
+      "daily": [
+        {
+          "id": "D_FVG_bull",
+          "kind": "FVG",
+          "low": 1.1148,
+          "high": 1.1159
+        }
+      ],
+      "h4": [
+        {
+          "id": "H4_OB_bull",
+          "kind": "OB",
+          "low": 1.1152,
+          "high": 1.1164
+        }
+      ]
+    },
+    "ltf": {
+      "m15": [
+        {
+          "id": "M15_FVG_bull",
+          "kind": "FVG",
+          "low": 1.115,
+          "high": 1.1154
+        }
+      ]
+    },
+    "confluences": [
+      {
+        "arrays": [
+          "M15_FVG_bull"
+        ],
+        "with": "asian_low"
+      }
+    ]
+  },
+  "sentiment": {
+    "direction": "bullish",
+    "expected_delivery": "higher",
+    "indicator": {
+      "name": "williams_r",
+      "period": 10,
+      "timeframe": "m15",
+      "value": -82.0,
+      "state": "bullish"
+    },
+    "reference_open": "gmt0",
+    "asian_range": {
+      "high": 1.1176,
+      "low": 1.1151
+    },
+    "liquidity_probe": {
+      "preferred_side": "sell_side",
+      "observed_side": "sell_side"
+    },
+    "judas_side": "sell_side",
+    "reaction": {
+      "pd_array_reaction": "confirmed"
+    },
+    "basis": [
+      "williams_r",
+      "asian_range",
+      "opening_price",
+      "pd_array",
+      "pair_iof",
+      "dxy"
+    ]
+  },
+  "profile": "reversal_watch",
+  "scenarios": {
+    "primary": "sell-side probe under Asia/open into daily bullish FVG, then delivery higher",
+    "contrary": "acceptance below origin FVG / failure of PD-array reaction"
+  },
+  "evidence": {
+    "raid": {
+      "level": "pdl",
+      "price": 1.1142,
+      "taken": true
+    },
+    "session": "london",
+    "london_direction": "bearish_probe",
+    "htf_pd_at_raid": "D_FVG_bull",
+    "mss": false,
+    "box": null,
+    "notes": "Eligible reversal context, execution not confirmed."
+  }
+}

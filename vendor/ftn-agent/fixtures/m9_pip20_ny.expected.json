@@ -1,0 +1,11 @@
+{
+  "fixture": "fixtures/m9_pip20_ny.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_candidate_states": {
+    "REV": "ineligible",
+    "CONSO": "ineligible",
+    "PIP20": "unevaluated",
+    "BB": "suppressed",
+    "FTN": "annotate"
+  }
+}

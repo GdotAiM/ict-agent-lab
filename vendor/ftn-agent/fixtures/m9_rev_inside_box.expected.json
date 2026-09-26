@@ -1,0 +1,11 @@
+{
+  "fixture": "fixtures/m9_rev_inside_box.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_candidate_states": {
+    "REV": "selected",
+    "CONSO": "suppressed",
+    "PIP20": "ineligible",
+    "BB": "invalidated",
+    "FTN": "annotate"
+  }
+}

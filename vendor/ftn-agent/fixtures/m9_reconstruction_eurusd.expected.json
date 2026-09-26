@@ -1,0 +1,29 @@
+{
+  "fixture": "fixtures/m9_reconstruction_eurusd.json",
+  "note": "Gold file for the reconstruction test. Engine fixtures must not contain this object.",
+  "expected_market_read": {
+    "sentiment": "bullish",
+    "wr_state": "bullish",
+    "probe": "sell_side below asian low / open",
+    "sponsorship": "bullish",
+    "daytrade_iof": "bullish",
+    "daytrade_confidence": "qualified",
+    "dxy": "supportive",
+    "profile": "reversal_watch",
+    "origin": "D_FVG_bull"
+  },
+  "expected_candidate_sketch": {
+    "REV": "execution-ready if eligibility+MSS read from evidence",
+    "CONSO": "ineligible or suppressed \u2014 box is null",
+    "PIP20": "likely ineligible \u2014 reversal_watch profile",
+    "BB": "likely invalidated if named extreme + HTF array is treated as REV context",
+    "FTN": "annotate"
+  },
+  "expected_candidate_states": {
+    "REV": "selected",
+    "CONSO": "ineligible",
+    "PIP20": "ineligible",
+    "BB": "invalidated",
+    "FTN": "annotate"
+  }
+}

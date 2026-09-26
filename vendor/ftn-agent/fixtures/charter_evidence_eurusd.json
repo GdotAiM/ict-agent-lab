@@ -1,0 +1,25 @@
+{
+  "symbol": "EURUSD",
+  "date": "2018-01-10",
+  "focus_pair": "EURUSD",
+  "last": 1.195,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "CHARTER evidence S2. Labeled PAM1 context only.",
+    "identified_pam": "present",
+    "model13_bridge": "none",
+    "recognized_pams": [
+      {
+        "pam_id": "pam1",
+        "horizon": "intraday_scalp",
+        "primary_lecture_note": "present",
+        "amplified_note": "present",
+        "trade_plan_note": "present",
+        "algorithmic_theory_note": "none"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-07-12",
+  "focus_pair": "EURUSD",
+  "last": 1.141,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "M11 evidence S2. Labeled mega-trade context.",
+    "mega_trade_family": "fx",
+    "identified_mega_trade": "present",
+    "quarterly_shift_overlap": "present",
+    "seasonal_overlap": "present",
+    "relative_strength_note": "present"
+  }
+}

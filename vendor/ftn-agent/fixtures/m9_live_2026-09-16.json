@@ -1,0 +1,226 @@
+{
+  "symbol": "EURUSD",
+  "date": "2026-09-16",
+  "focus_pair": "EURUSD",
+  "last": 1.1533,
+  "clock": "09:37",
+  "session": "ny_am",
+  "calendar": [
+    {
+      "when": "14:00",
+      "pair": "EURUSD",
+      "impact": "high",
+      "killzone": "ny",
+      "title": "FOMC rate decision"
+    }
+  ],
+  "watchlist": [
+    "EURUSD",
+    "GBPUSD",
+    "XAUUSD"
+  ],
+  "opens": {
+    "gmt0": 1.1544,
+    "ny_midnight": 1.1542
+  },
+  "ranges": {
+    "previous_day": {
+      "high": 1.1561,
+      "low": 1.1527,
+      "close": 1.1542,
+      "open": 1.1552
+    },
+    "cbdr": {
+      "high": 1.1554,
+      "low": 1.1538
+    },
+    "asian": {
+      "high": 1.1552,
+      "low": 1.1541
+    },
+    "flout": {
+      "high": 1.1559,
+      "low": 1.1538
+    },
+    "named_extremes": {
+      "pdh": 1.1561,
+      "pdl": 1.1527,
+      "week_so_far_high": 1.1654,
+      "week_so_far_low": 1.1523,
+      "ith": 1.1711,
+      "itl": 1.1523
+    }
+  },
+  "adr5": {
+    "high": 1.1642,
+    "low": 1.1523,
+    "remaining": 12
+  },
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "not_scored",
+      "weekly": "bearish",
+      "daily": "bearish",
+      "h4": "bearish"
+    },
+    "daytrade_iof": {
+      "daily": "bearish",
+      "h4": "bearish",
+      "m60": "bearish"
+    }
+  },
+  "dxy": {
+    "from": "premium",
+    "institutional": {
+      "sponsorship": {
+        "daily": "bullish",
+        "h4": "bullish"
+      },
+      "daytrade_iof": {
+        "daily": "bullish",
+        "h4": "bullish",
+        "m60": "bullish"
+      },
+      "state": "bullish"
+    }
+  },
+  "sentiment": {
+    "indicator": {
+      "name": "williams_r",
+      "period": 10,
+      "timeframe": "m15"
+    },
+    "reference_open": "gmt0",
+    "asian_range": {
+      "high": 1.1552,
+      "low": 1.1541
+    },
+    "liquidity_probe": {
+      "observed_side": "sell_side"
+    },
+    "judas_side": "sell_side",
+    "reaction": {
+      "pd_array_reaction": "pending"
+    }
+  },
+  "pd_matrix": {
+    "htf": {
+      "daily": [
+        {
+          "id": "D_FVG_bear",
+          "kind": "FVG",
+          "low": 1.1565,
+          "high": 1.158
+        },
+        {
+          "id": "PDL_liq",
+          "kind": "liquidity",
+          "low": 1.1526,
+          "high": 1.1528
+        },
+        {
+          "id": "WSL_liq",
+          "kind": "liquidity",
+          "low": 1.1522,
+          "high": 1.1524
+        }
+      ]
+    }
+  },
+  "scenarios": {
+    "primary": "FOMC day. Dollar firm. Sell-side probe of PDL into NY AM; bearish IOF seeks WSL 1.1523 then expansion lower if FOMC confirms.",
+    "contrary": "Reclaim and hold above PDH 1.1561 / daily FVG 1.1565\u20131.1580 after the PDL probe."
+  },
+  "evidence": {
+    "session": "ny_am",
+    "clock": "09:37",
+    "notes": "Paper live-price test 16 Sep 2026. Last 1.1533 from MarketWatch 09:09 ET. 15m path reconstructed from published day range 1.1528\u20131.1559. IOF labels are HTF structure reads (Aug high 1.1711 \u2192 lower), not full 4H candle votes. No broker."
+  },
+  "bars_m15": [
+    {
+      "t": "2026-09-16T07:00:00Z",
+      "o": 1.1544,
+      "h": 1.1548,
+      "l": 1.1541,
+      "c": 1.1546
+    },
+    {
+      "t": "2026-09-16T07:15:00Z",
+      "o": 1.1546,
+      "h": 1.1552,
+      "l": 1.1544,
+      "c": 1.155
+    },
+    {
+      "t": "2026-09-16T07:30:00Z",
+      "o": 1.155,
+      "h": 1.1559,
+      "l": 1.1548,
+      "c": 1.1554
+    },
+    {
+      "t": "2026-09-16T07:45:00Z",
+      "o": 1.1554,
+      "h": 1.1557,
+      "l": 1.1549,
+      "c": 1.1551
+    },
+    {
+      "t": "2026-09-16T08:00:00Z",
+      "o": 1.1551,
+      "h": 1.1552,
+      "l": 1.1542,
+      "c": 1.1544
+    },
+    {
+      "t": "2026-09-16T08:15:00Z",
+      "o": 1.1544,
+      "h": 1.1545,
+      "l": 1.1536,
+      "c": 1.1538
+    },
+    {
+      "t": "2026-09-16T08:30:00Z",
+      "o": 1.1538,
+      "h": 1.154,
+      "l": 1.1532,
+      "c": 1.1534
+    },
+    {
+      "t": "2026-09-16T08:45:00Z",
+      "o": 1.1534,
+      "h": 1.1535,
+      "l": 1.1528,
+      "c": 1.153
+    },
+    {
+      "t": "2026-09-16T09:00:00Z",
+      "o": 1.153,
+      "h": 1.1535,
+      "l": 1.1529,
+      "c": 1.1533
+    },
+    {
+      "t": "2026-09-16T09:15:00Z",
+      "o": 1.1533,
+      "h": 1.1536,
+      "l": 1.1531,
+      "c": 1.1533
+    },
+    {
+      "t": "2026-09-16T09:30:00Z",
+      "o": 1.1533,
+      "h": 1.1535,
+      "l": 1.1531,
+      "c": 1.1533
+    },
+    {
+      "t": "2026-09-16T09:45:00Z",
+      "o": 1.1533,
+      "h": 1.15345,
+      "l": 1.15315,
+      "c": 1.1533
+    }
+  ],
+  "mode": "paper"
+}

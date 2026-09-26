@@ -1,0 +1,11 @@
+{
+  "fixture": "fixtures/m9_rev_eligible_no_mss.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_candidate_states": {
+    "REV": "unevaluated",
+    "CONSO": "ineligible",
+    "PIP20": "ineligible",
+    "BB": "invalidated",
+    "FTN": "annotate"
+  }
+}

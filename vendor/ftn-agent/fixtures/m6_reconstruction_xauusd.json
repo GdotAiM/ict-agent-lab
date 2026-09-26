@@ -1,0 +1,59 @@
+{
+  "symbol": "XAUUSD",
+  "date": "2017-02-14",
+  "focus_pair": "XAUUSD",
+  "last": 1234.5,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "XAUUSD"
+  ],
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "bullish",
+      "weekly": "bullish",
+      "daily": "bearish"
+    },
+    "state": "bullish"
+  },
+  "origin_pd_array": "M_OB_bull",
+  "opposing_target_arrays": [
+    "W_PREMIUM"
+  ],
+  "evidence": {
+    "notes": "M6 KNOWN-STATE. Provided fields. No pick."
+  },
+  "month6": {
+    "market_selection": {
+      "state": "suitable"
+    },
+    "swing_family": "bull",
+    "sequential_pattern": {
+      "name": "mw_bullish_daily_correcting",
+      "state": "watching"
+    },
+    "supporting_evidence": {
+      "htf_trend": true,
+      "institutional_order_flow": true,
+      "pd_arrays": true,
+      "seasonal_tendency": true,
+      "interest_rates": true,
+      "cot": true,
+      "intermarket": true
+    },
+    "risk_frame": {
+      "stop_reference": "M_OB_bull",
+      "target_reference": "W_PREMIUM",
+      "reward_frame": "discount_to_premium"
+    },
+    "million_dollar_swing": {
+      "state": "incomplete",
+      "missing": [
+        "management"
+      ]
+    },
+    "swing_opportunity": {
+      "flag": true,
+      "reason": "provided_state"
+    }
+  }
+}

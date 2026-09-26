@@ -1,0 +1,50 @@
+{
+  "symbol": "EURUSD",
+  "date": "2018-01-10",
+  "focus_pair": "EURUSD",
+  "last": 1.195,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "PAM1 evidence-only fixture. Describes model instance. Does not prove detector. recognition flag forced false.",
+    "identified_pam": "present",
+    "model13_bridge": "none",
+    "recognized_pams": [
+      {
+        "pam_id": "pam1",
+        "horizon": "intraday_scalp",
+        "primary_lecture_note": "present",
+        "amplified_note": "present",
+        "trade_plan_note": "present",
+        "algorithmic_theory_note": "present"
+      }
+    ],
+    "pam1_model_context": {
+      "direction": "bullish",
+      "ipda_data_range": {
+        "lookback_trading_days": 20,
+        "present": "present"
+      },
+      "institutional_sponsorship": "present",
+      "premium_discount_context": "discount",
+      "liquidity_objective": {
+        "type": "previous_daily_high",
+        "present": "present"
+      },
+      "ny_execution_window": "present",
+      "ote": {
+        "present": "present",
+        "fib_level": "62_percent"
+      },
+      "price_structure": {
+        "liquidity_raid": "present",
+        "displacement": "present",
+        "market_structure_shift": "present",
+        "institutional_reference": "present"
+      },
+      "directional_link": "present"
+    }
+  }
+}

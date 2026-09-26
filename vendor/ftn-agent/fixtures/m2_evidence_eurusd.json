@@ -1,0 +1,20 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-01-04",
+  "focus_pair": "EURUSD",
+  "last": 1.048,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "M2 evidence S2. Labeled context.",
+    "small_account_posture": "present",
+    "identified_low_risk_frame": "present",
+    "identified_high_reward_context": "present",
+    "monthly_return_guidance": "10_percent",
+    "psychology_note": "no_fear_of_losing",
+    "loss_mitigation_note": "present",
+    "trap_pattern": "none"
+  }
+}

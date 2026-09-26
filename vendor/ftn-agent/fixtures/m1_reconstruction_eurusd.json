@@ -1,0 +1,27 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-01-03",
+  "focus_pair": "EURUSD",
+  "last": 1.046,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "M1 KNOWN-STATE. Provided fields. No pick."
+  },
+  "month1": {
+    "identified_setup_elements": "present",
+    "dealing_range_side": "discount",
+    "conditioning_note": "present",
+    "focus_note": "present",
+    "fair_valuation_note": "present",
+    "liquidity_run_note": "present",
+    "impulse_note": "present",
+    "protraction_note": "none",
+    "setup_elements": {
+      "flag": true,
+      "reason": "provided_state"
+    }
+  }
+}

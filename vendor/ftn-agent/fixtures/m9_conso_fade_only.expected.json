@@ -1,0 +1,13 @@
+{
+  "fixture": "fixtures/m9_conso_fade_only.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_candidate_states": {
+    "REV": "ineligible",
+    "CONSO": "unevaluated",
+    "PIP20": "ineligible",
+    "BB": "unevaluated",
+    "FTN": "annotate"
+  },
+  "expected_conso_play": "fade_edge",
+  "expected_conso_target": "eq"
+}

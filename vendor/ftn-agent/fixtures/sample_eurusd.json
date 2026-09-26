@@ -1,0 +1,30 @@
+{
+  "symbol": "EURUSD",
+  "pip": 0.0001,
+  "htf_bias": "bearish",
+  "last": 1.08720,
+  "atr": 0.00740,
+  "previous_day": {
+    "high": 1.09310,
+    "low": 1.08420,
+    "close": 1.08840
+  },
+  "swings": {
+    "d3_high": 1.09680,
+    "d3_low": 1.08110
+  },
+  "cbdr": { "high": 1.09040, "low": 1.08710 },
+  "asian": { "high": 1.08920, "low": 1.08640 },
+  "flout": { "high": 1.09180, "low": 1.08590 },
+  "pd_arrays": [
+    { "id": "D_FVG_bear", "kind": "FVG", "low": 1.08580, "high": 1.08660 },
+    { "id": "H4_OB_bear", "kind": "OB", "low": 1.08980, "high": 1.09090 }
+  ],
+  "setup": {
+    "killzone": "ny_am",
+    "liquidity_raid": true,
+    "displacement": true,
+    "mss": true,
+    "pd_retrace": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "fixture": "fixtures/m9_bb_offset.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_candidate_states": {
+    "REV": "ineligible",
+    "CONSO": "ineligible",
+    "PIP20": "ineligible",
+    "BB": "unevaluated",
+    "FTN": "annotate"
+  },
+  "expected_bb_engine": "offset",
+  "expected_bb_side": "buy"
+}

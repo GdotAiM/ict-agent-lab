@@ -1,0 +1,26 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-01-05",
+  "focus_pair": "EURUSD",
+  "last": 1.05,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "evidence": {
+    "notes": "M3 KNOWN-STATE. Provided fields. No pick."
+  },
+  "month3": {
+    "selected_timeframe": "monthly",
+    "institutional_order_flow": "bullish",
+    "institutional_sponsorship": "bullish",
+    "institutional_structure": "bullish",
+    "macro_to_micro": "present",
+    "trap_pattern": "none",
+    "anticipated_setup": "present",
+    "next_setup": {
+      "flag": true,
+      "reason": "provided_state"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "fixture": "fixtures/m9_raw_eurusd.json",
+  "note": "Gold oracle. Engine must not open this file.",
+  "expected_market_read": {
+    "sentiment": "bullish",
+    "wr_state": "bullish",
+    "daytrade_iof": "bullish",
+    "daytrade_confidence": "qualified",
+    "profile": "reversal_watch",
+    "origin": "D_FVG_bull"
+  },
+  "expected_candidate_states": {
+    "REV": "selected",
+    "CONSO": "ineligible",
+    "PIP20": "ineligible",
+    "BB": "invalidated",
+    "FTN": "annotate"
+  }
+}

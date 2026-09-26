@@ -1,0 +1,12 @@
+{
+  "fixture": "fixtures/m8_evidence_eurusd.json",
+  "fixture_kind": "evidence",
+  "note": "Oracle for Slice 2 measure detector. Engine must not open this file.",
+  "expected_derived": {
+    "cbdr_classification": "ideal",
+    "london_allowed": true,
+    "london_reason": null,
+    "ict_london_profile": "none",
+    "daytrade_opportunity": false
+  }
+}

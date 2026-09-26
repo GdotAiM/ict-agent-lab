@@ -1,0 +1,112 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-04-15",
+  "focus_pair": "EURUSD",
+  "last": 1.0614,
+  "timezone": "America/New_York",
+  "calendar": [],
+  "watchlist": [
+    "EURUSD"
+  ],
+  "opens": {
+    "gmt0": 1.0598,
+    "ny_midnight": 1.0599
+  },
+  "ranges": {
+    "previous_day": {
+      "high": 1.0621,
+      "low": 1.0574,
+      "close": 1.0598
+    },
+    "asian": {
+      "high": 1.0611,
+      "low": 1.0592
+    },
+    "cbdr": {
+      "high": 1.0608,
+      "low": 1.0582
+    },
+    "named_extremes": {
+      "pdh": 1.0621,
+      "pdl": 1.0574
+    }
+  },
+  "adr5": {
+    "high": 1.064,
+    "low": 1.056,
+    "remaining": 55
+  },
+  "pair_institutional": {
+    "sponsorship": {
+      "weekly": "bearish",
+      "daily": "bearish",
+      "h4": "bearish"
+    },
+    "daytrade_iof": {
+      "daily": "bearish",
+      "h4": "bearish",
+      "m60": "bearish"
+    },
+    "state": "bearish"
+  },
+  "dxy": {
+    "relationship": "supportive",
+    "from": "discount",
+    "institutional": {
+      "state": "bullish"
+    }
+  },
+  "sentiment": {
+    "direction": "bearish",
+    "expected_delivery": "lower",
+    "indicator": {
+      "value": -22.0,
+      "state": "bearish"
+    },
+    "reference_open": "gmt0",
+    "asian_range": {
+      "high": 1.0611,
+      "low": 1.0592
+    },
+    "liquidity_probe": {
+      "preferred_side": "buy_side",
+      "observed_side": "buy_side"
+    },
+    "judas_side": "buy_side",
+    "reaction": {
+      "pd_array_reaction": "pending"
+    }
+  },
+  "origin_pd_array": "D_FVG_bear",
+  "opposing_target_arrays": [
+    "PDL"
+  ],
+  "scenarios": {
+    "primary": "Slice 4 research fixture. Do not treat scenarios as labels.",
+    "contrary": "Acceptance above projected 2SD high / failure to leave the buy-side probe."
+  },
+  "evidence": {
+    "session": "london",
+    "notes": "S4 late rally: HH taken but not by 02:00. No profile key.",
+    "path_after_anchor": {
+      "anchor": "00:00",
+      "clock": "America/New_York",
+      "first_move": "up",
+      "window": "02:00-05:00",
+      "higher_high_vs_asian_or_cbdr": true,
+      "lower_low_vs_asian_or_cbdr": false,
+      "move_started_by_0200": false
+    }
+  },
+  "month8": {
+    "cbdr": {
+      "height_pips": 26,
+      "body_height_pips": 24,
+      "body_high": 1.0606,
+      "body_low": 1.0582,
+      "wick_high": 1.0608,
+      "wick_low": 1.0581
+    },
+    "asian_height_pips": 19
+  }
+}

@@ -1,0 +1,64 @@
+# FTN standalone agent config
+# PAPER default. Live locked unless human unlocks.
+
+layer:
+  id: FTN
+  title: Filling The Numbers orchestration agent
+  mint_sibling: https://github.com/GdotAiM/mint-agent
+
+mode: paper
+live_enabled: false
+live_data_enabled: false
+# Trading live: live_enabled + FTN_LIVE=1 (still refused by stub).
+# Data live: live_data_enabled + FTN_LIVE_DATA=1 (quotes only, no orders).
+
+symbol_default: EURUSD
+timezone: America/New_York
+
+equity:
+  starting_usd: 100000
+  currency: USD
+
+risk_caps:
+  max_trade_risk_pct: 0.5
+  max_daily_loss_pct: 2.0
+  max_portfolio_dd_pct: 5.0
+  scale_out_after_levels: 4
+  runner_pct: 0.25
+  raise_requires: human
+
+volatility:
+  min_atr_pips: 20
+  compress_blocks_trade: true
+
+sessions:
+  asian: { start: "19:00", end: "00:00" }   # NY clock previous evening
+  london: { start: "02:00", end: "05:00" }
+  ny_am: { start: "07:00", end: "10:00" }
+  flout: { start: "15:00", end: "00:00" }
+  cbdr: { start: "14:00", end: "20:00" }    # ICT CBDR window (NY)
+
+killzones:
+  - london
+  - ny_am
+
+measurement_families:
+  - pivots
+  - cbdr
+  - asian
+  - flout
+
+confluence:
+  require_pd_overlap: true
+  overlap_tolerance_pips: 8
+
+journal:
+  template: src/ftn/journal/_TEMPLATE_DECISION.md
+
+banned:
+  - live_without_dual_unlock
+  - treat_pivots_as_entries
+  - order_without_pd_array
+  - trade_compressed_range
+  - raise_caps_without_human
+  - commit_secrets

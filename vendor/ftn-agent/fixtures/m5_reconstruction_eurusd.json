@@ -1,0 +1,65 @@
+{
+  "symbol": "EURUSD",
+  "date": "2017-01-17",
+  "focus_pair": "EURUSD",
+  "last": 1.066,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "EURUSD"
+  ],
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "bullish",
+      "weekly": "bullish"
+    },
+    "state": "bullish"
+  },
+  "origin_pd_array": "M_OB_bull",
+  "opposing_target_arrays": [
+    "W_PREMIUM"
+  ],
+  "evidence": {
+    "notes": "M5 KNOWN-STATE. Provided fields. No pick."
+  },
+  "month5": {
+    "quarterly_shift": {
+      "state": "in_progress",
+      "lookback_months": 3,
+      "direction": "bullish"
+    },
+    "ipda_window": {
+      "days": 60,
+      "high": "IPDA60H",
+      "low": "IPDA60L"
+    },
+    "open_float": {
+      "buy_side": "present",
+      "sell_side": "absent"
+    },
+    "open_float_pools": {
+      "pool_ids": [
+        "IPDA60L"
+      ]
+    },
+    "institutional_swing": {
+      "kind": "breaker_swing_point",
+      "entry_annotation": "turtle_soup"
+    },
+    "confirming": {
+      "seasonal_tendency": "bullish",
+      "intermarket": true
+    },
+    "htf_pd": {
+      "dealing_range_tf": "monthly",
+      "nearest_discount_id": "M_OB_bull",
+      "nearest_premium_id": "M_OH"
+    },
+    "setup_progression": "watching",
+    "entry_technique": "limit",
+    "position_management": "none",
+    "position_opportunity": {
+      "flag": true,
+      "reason": "provided_state"
+    }
+  }
+}

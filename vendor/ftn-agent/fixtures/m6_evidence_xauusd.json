@@ -1,0 +1,31 @@
+{
+  "symbol": "XAUUSD",
+  "date": "2017-02-15",
+  "focus_pair": "XAUUSD",
+  "last": 1234.5,
+  "timezone": "America/New_York",
+  "watchlist": [
+    "XAUUSD"
+  ],
+  "pair_institutional": {
+    "sponsorship": {
+      "monthly": "bullish",
+      "weekly": "bullish",
+      "daily": "bearish"
+    },
+    "state": "bullish"
+  },
+  "origin_pd_array": "M_OB_bull",
+  "opposing_target_arrays": [
+    "W_PREMIUM"
+  ],
+  "evidence": {
+    "notes": "M6 evidence Slice 2. Labeled sponsorship only. No family.",
+    "supporting_evidence": {
+      "seasonal_tendency": true,
+      "interest_rates": false,
+      "cot": false,
+      "intermarket": false
+    }
+  }
+}

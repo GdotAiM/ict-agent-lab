@@ -1,0 +1,11 @@
+{
+  "fixture": "fixtures/m8_path_eurusd.json",
+  "fixture_kind": "path_evidence",
+  "note": "Oracle for Slice 3. Engine must not open this file.",
+  "expected_derived": {
+    "cbdr_classification": "ideal",
+    "london_allowed": true,
+    "ict_london_profile": "normal_protraction_sell",
+    "daytrade_opportunity": true
+  }
+}
