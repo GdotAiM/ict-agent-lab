@@ -1,0 +1,285 @@
+# Direct (local, offline) calls of the FTN Strands tools -- not via the AgentCore runtime
+
+$ ftn_run_workflow(fixture='sample_eurusd')
+{
+  "ok": true,
+  "stage": "all",
+  "stages": [
+    "PREP",
+    "FILTER",
+    "WATCH",
+    "GATE",
+    "MANAGE",
+    "JOURNAL"
+  ],
+  "scanned_at": "20260926T101012Z",
+  "ticket": {
+    "kind": "entry_candidate",
+    "actionable_for_mint": true,
+    "symbol": "EURUSD",
+    "bias": "bearish",
+    "price": 1.0872,
+    "family": "cbdr",
+    "four_levels": [
+      {
+        "index": 1,
+        "name": "cbdr_dn_0",
+        "price": 1.0871
+      },
+      {
+        "index": 2,
+        "name": "cbdr_dn_1",
+        "price": 1.0837999999999999
+      },
+      {
+        "index": 3,
+        "name": "cbdr_dn_2",
+        "price": 1.0804999999999998
+      },
+      {
+        "index": 4,
+        "name": "cbdr_dn_3",
+        "price": 1.0771999999999997
+      }
+    ],
+    "all_families": {
+      "pivots": [
+        {
+          "index": 1,
+          "name": "M2",
+          "price": 1.0863
+        },
+        {
+          "index": 2,
+          "name": "S1",
+          "price": 1.0840333333333334
+        },
+        {
+          "index": 3,
+          "name": "M1",
+          "price": 1.0818500000000002
+        },
+        {
+          "index": 4,
+          "name": "S2",
+          "price": 1.0796666666666668
+        }
+      ],
+      "cbdr": [
+        {
+          "index": 1,
+          "name": "cbdr_dn_0",
+          "price": 1.0871
+        },
+        {
+          "index": 2,
+          "name": "cbdr_dn_1",
+          "price": 1.0837999999999999
+        },
+        {
+          "index": 3,
+          "name": "cbdr_dn_2",
+          "price": 1.0804999999999998
+        },
+        {
+          "index": 4,
+          "name": "cbdr_dn_3",
+          "price": 1.0771999999999997
+        }
+      ],
+      "asian": [
+        {
+          "index": 1,
+          "name": "asian_dn_0",
+          "price": 1.0864
+        },
+        {
+          "index": 2,
+          "name": "asian_dn_1",
+          "price": 1.0836000000000001
+        },
+        {
+          "index": 3,
+          "name": "asian_dn_2",
+          "price": 1.0808000000000002
+        },
+        {
+          "index": 4,
+          "name": "asian_dn_3",
+          "price": 1.0780000000000003
+        }
+      ],
+      "flout": [
+        {
+          "index": 1,
+          "name": "flout_dn_0",
+          "price": 1.0859
+        },
+        {
+          "index": 2,
+          "name": "flout_dn_1",
+          "price": 1.08
+        },
+        {
+          "index": 3,
+          "name": "flout_dn_2",
+          "price": 1.0741
+        },
+        {
+          "index": 4,
+          "name": "flout_dn_3",
+          "price": 1.0682
+        }
+      ]
+    },
+    "pd_confluence": [
+      {
+        "index": 1,
+        "name": "cbdr_dn_0",
+        "price": 1.0871,
+        "pd_array": "D_FVG_bear",
+        "kind": "FVG"
+      }
+    ],
+    "volatility_atr_pips": 74.0,
+    "compressed": false,
+    "gate_ok": true,
+    "no_trade_reasons": [],
+    "management": {
+      "scale_out_after_levels": 4,
+      "runner_pct": 0.25,
+      "note": "Pivots/ranges are targets. Entry remains PD-array after MSS."
+    },
+    "mode": "paper",
+    "live_enabled": false,
+    "setup": {
+      "killzone": "ny_am",
+      "liquidity_raid": true,
+      "displacement": true,
+      "mss": true,
+      "pd_retrace": true
+    }
+  },
+  "measurements": {
+    "pivots": {
+      "PP": 1.0885666666666667,
+      "M3": 1.0907499999999999,
+      "R1": 1.0929333333333333,
+      "M4": 1.0952,
+      "R2": 1.0974666666666666,
+      "M5": 1.09965,
+      "R3": 1.1018333333333332,
+      "M2": 1.0863,
+      "S1": 1.0840333333333334,
+      "M1": 1.0818500000000002,
+      "S2": 1.0796666666666668,
+      "M0": 1.0774000000000001,
+      "S3": 1.0751333333333335
+    },
+    "cbdr": {
+      "low": 1.0871,
+      "high": 1.0904,
+      "eq": 1.08875,
+      "width": 0.0033000000000000806,
+      "sd_up": [
+        1.0904,
+        1.0937000000000001,
+        1.0970000000000002,
+        1.1003000000000003
+      ],
+      "sd_down": [
+        1.0871,
+        1.0837999999999999,
+        1.0804999999999998,
+        1.0771999999999997
+      ]
+    },
+    "asian": {
+      "low": 1.0864,
+      "high": 1.0892,
+      "eq": 1.0878,
+      "width": 0.0027999999999999137,
+      "sd_up": [
+        1.0892,
+        1.0919999999999999,
+        1.0947999999999998,
+        1.0975999999999997
+      ],
+      "sd_down": [
+        1.0864,
+        1.0836000000000001,
+        1.0808000000000002,
+        1.0780000000000003
+      ]
+    },
+    "flout": {
+      "low": 1.0859,
+      "high": 1.0918,
+      "eq": 1.08885,
+      "width": 0.005900000000000016,
+      "sd_up": [
+        1.0918,
+        1.0977000000000001,
+        1.1036000000000001,
+        1.1095000000000002
+      ],
+      "sd_down": [
+        1.0859,
+        1.08,
+        1.0741,
+        1.0682
+      ]
+    }
+  },
+  "no_trade": false,
+  "orders_placed": 0,
+  "note": "No orders placed. Ticket still needs MINT allowlist + RISK + human paper ack.",
+  "journal_markdown": "# FTN Decision \u2014 20260926T101012Z\n\n**Symbol:** EURUSD\n**Bias:** bearish\n**Mode:** paper\n**Ticket:** entry_candidate\n\n## Four numbers (cbdr)\n\n- L1 `cbdr_dn_0` @ 1.08710\n- L2 `cbdr_dn_1` @ 1.08380\n- L3 `cbdr_dn_2` @ 1.08050\n- L4 `cbdr_dn_3` @ 1.07720\n\n## PD-array confluence\n\n- cbdr_dn_0 \u00d7 D_FVG_bear (FVG)\n\n## Setup gate\n\n- killzone: ny_am\n- liquidity_raid: True\n- displacement: True\n- mss: True\n- pd_retrace: True\n\n## No-trade reasons\n\n- none (candidate)\n\n## Management\n\nScale majority after 4 filled numbers. Leave runner ~25% for expansion days.\nPivots / CBDR / Asian / Flout are **targets**, not entries.\n\n## Handoff\n\nNext: MINT\nPath: dispatch/out/latest.json\nAsk: Paper-ack only if RISK + allowlist clear.\n"
+}
+
+$ ftn_briefing(fixture='integration_m1_m9_eurusd')  [markdown truncated to 1500 chars here]
+{
+  "fixture": "integration_m1_m9_eurusd",
+  "date": "2017-01-18",
+  "symbol": "EURUSD",
+  "mode": "paper",
+  "candidates": [
+    {
+      "module": "REV",
+      "state": "ineligible",
+      "eligible": false,
+      "reason": "no_named_extreme_plus_htf_context",
+      "origin": "ict_source"
+    },
+    {
+      "module": "CONSO",
+      "state": "ineligible",
+      "eligible": false,
+      "reason": "box_null",
+      "origin": "ict_source"
+    },
+    {
+      "module": "PIP20",
+      "state": "ineligible",
+      "eligible": false,
+      "reason": "profile=unclear",
+      "origin": "hermes_interpretation"
+    },
+    {
+      "module": "BB",
+      "state": "ineligible",
+      "eligible": false,
+      "reason": "missing_iof_or_judas_or_engine",
+      "origin": "ict_source"
+    },
+    {
+      "module": "FTN",
+      "state": "annotate",
+      "eligible": false,
+      "reason": "objectives_only",
+      "origin": "hermes_governance"
+    }
+  ],
+  "briefing_markdown": "# Month-9 DTR briefing \u2014 EURUSD 2017-01-18\n\n**Mode:** paper  \n**Focus pair:** EURUSD  \n**Last:** 1.066  \n**Snapshot:** `4403884663381676135`\n\nThis briefing is reconstructed from Market State evidence.\nIt does not read an expected-winner file.\n\n## Market State\n\n- **Sentiment:** unclear / expected delivery unclear\n- **Williams %R(10) 15m:** None (unavailable)\n- **Reference open:** gmt0 = n/a\n- **Asian range:** {}\n- **Liquidity probe preferred:** either\n- **Liquidity probe observed:** none\n- **Judas side:** none\n- **PD-array reaction:** none\n- **HTF sponsorship:** daily=bearish 4H=bullish weekly=bullish\n- **Daytrade IOF:** daily=unclear 4H=unclear 60m=unclear\n- **Daytrade state:** unclear / unclear []\n- **DXY relationship:** unavailable from None\n- **Profile:** unclear (`hermes_interpretation`)\n- **Origin PD:** M_OB_bull\n- **Target arrays:** W_PREMIUM\n\n## Month 1 (ICT foundation)\n\n- **Identified setup elements:** present\n- **Dealing-range side:** discount\n- **Conditioning:** present\n- **Focus:** present\n- **Fair valuation:** present\n- **Liquidity run:** present\n- **Impulse:** present\n- **Protraction:** none\n- **Setup elements:** True (identified_setup_elements) \u2014 not a session ticket\n\nMonth 1 describes foundation context. It does not select an M9 candidate or overwrite Hermes profile.\n\n## Month 2 (ICT risk frame)\n\n- **Small-account posture:** present\n- **Identified low-risk:** present\n- **Identified high-reward:** present\n- **Guidance:** 10_percent\n- **Psychology:** no_fear_of_l",
+  "truncated": true
+}

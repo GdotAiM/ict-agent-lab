@@ -61,6 +61,7 @@ from ict_lab.models import (
 )
 from ict_lab.loyalty import compute_loyalty_discount, normalize_category, normalize_tier
 from ict_lab.ict_tools import hypothesis_json, risk_reward_json
+from ict_lab.ftn_bridge import ftn_briefing_json, ftn_workflow_json, list_fixtures
 from typing import List, Optional
 
 
@@ -414,6 +415,60 @@ def build_research_hypothesis(
     return hypothesis_json(question, **overrides)
 
 
+# -- LAB -- FTN (Filling The Numbers) tools -- PAPER ONLY ----------------------
+@tool
+def ftn_run_workflow(
+    fixture: str = "sample_eurusd",
+    bias: str = "auto",
+    price: Optional[float] = None,
+    pack_json: Optional[str] = None,
+) -> str:
+    """
+    Run the FTN (Filling The Numbers) workflow PREP -> FILTER -> WATCH -> GATE ->
+    MANAGE -> JOURNAL on an OHLC pack and return the four measurement families
+    (0-GMT pivots, CBDR, Asian range, Flout), the directional four-level count,
+    PD-array confluence, the NO-TRADE filter result and a PAPER ticket. PAPER only:
+    never places orders, never goes live. Tickets are research artefacts, not orders.
+
+    Args:
+        fixture: Name of an FTN fixture (default sample_eurusd). Ignored if pack_json is given.
+        bias: auto, bullish or bearish (auto uses the pack's htf_bias)
+        price: Optional candidate price to count four levels from (default: pack last)
+        pack_json: Optional inline OHLC pack as JSON (same shape as sample_eurusd)
+
+    Returns:
+        Validated FtnWorkflowResult JSON, or an {"error": ...} JSON
+    """
+    return ftn_workflow_json(fixture=fixture, bias=bias, price=price, pack_json=pack_json)
+
+
+@tool
+def ftn_briefing(fixture: str = "integration_m1_m9_eurusd") -> str:
+    """
+    Build FTN's Month-9 DTR briefing and candidate log from an FTN evidence fixture
+    (read-only, PAPER). Use for questions about a fixture's market-state briefing.
+
+    Args:
+        fixture: Name of an FTN evidence fixture, e.g. integration_m1_m9_eurusd
+
+    Returns:
+        Validated FtnBriefing JSON (candidates + markdown), or an {"error": ...} JSON
+    """
+    return ftn_briefing_json(fixture)
+
+
+@tool
+def ftn_list_fixtures() -> str:
+    """
+    List FTN fixture names. workflow = packs usable by ftn_run_workflow;
+    all = every fixture (evidence fixtures work with ftn_briefing).
+
+    Returns:
+        JSON with workflow and all fixture names
+    """
+    return json.dumps({"workflow": list_fixtures(True), "all": list_fixtures()})
+
+
 # -- TODO 8 -- Agent Entrypoint -----------------------------------------------
 SYSTEM_PROMPT = """You are a customer support agent for an Amazon store, running in a personal
 lab build that is also being extended into an ICT trading research assistant. You help customers with:
@@ -431,6 +486,15 @@ You have access to:
 - Persistent memory across sessions to remember customer identity and preferences
 - ICT research tools: calculate_risk_reward (risk, reward, R multiple) and
   build_research_hypothesis (structured, testable research hypothesis)
+
+- FTN tools (PAPER only): ftn_run_workflow, ftn_briefing, ftn_list_fixtures
+
+FTN RULES (from the FTN charter -- never break them):
+- PAPER only. Never enable or suggest enabling live mode; never call brokers.
+- FTN tickets are research artefacts, not orders. Pivots/ranges are targets, not entries.
+- Report the four levels, NO-TRADE reasons, PD-array confluence and ticket kind exactly
+  as the tool returns them. Do not invent edges or claim a setup will work.
+- Risk caps are fixed by a human; never propose raising them.
 
 ICT RESEARCH RULES:
 - For trade risk/reward questions always call calculate_risk_reward and report its
@@ -487,6 +551,7 @@ async def invoke(payload, context=None):
     tools = [
         search_knowledge_base, calculate_loyalty_discount, agent_core_browser.browser,
         calculate_risk_reward, build_research_hypothesis,
+        ftn_run_workflow, ftn_briefing, ftn_list_fixtures,
     ]
 
     client = MCPClient(
