@@ -35,6 +35,7 @@ from strands import Agent, tool
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from bedrock_agentcore.memory import MemoryClient
 from strands.models import BedrockModel
+from strands.agent.conversation_manager import SummarizingConversationManager
 from strands.tools.mcp.mcp_client import MCPClient
 from mcp.client.streamable_http import streamable_http_client
 import argparse, json
@@ -484,6 +485,13 @@ async def invoke(payload, context=None):
             tools=tools,
             state={"actor_id": actor_id, "session_id": session_id},
             hooks=[memory_hook],
+            # Summarise the oldest ~30% of messages on context overflow while keeping
+            # the 10 most recent (tool-heavy research turns can get long).
+            # Args checked against strands-agents 1.57.1 source.
+            conversation_manager=SummarizingConversationManager(
+                summary_ratio=0.3,
+                preserve_recent_messages=10,
+            ),
         )
 
         response = agent(user_input)
