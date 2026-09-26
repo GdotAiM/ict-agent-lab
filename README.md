@@ -1,3 +1,143 @@
-# Purpose of this Folder
+# ICT Agent Lab
 
-This folder should contain the scaffolded project files to get a student started on their project. This repo will be added to the Classroom for students to use, so please do not have any solutions in this folder.
+A **personal lab** that extends the architecture from my Udacity *AI Support Agent* project
+(Amazon Bedrock AgentCore + Strands Agents + Amazon Nova 2 Lite) toward an **ICT trading
+research assistant**. It keeps the customer-support tools as a working baseline and adds
+validated outputs, conversation summarisation and research tooling.
+
+> **Separate from the Udacity submission.** The graded project lives in
+> `GdotAiM/cd14763-project-starter` and runs as the AgentCore runtime
+> `customer_support_agent`. This repo is deployed as its own runtime, **`ict_agent_lab`**,
+> with its own (gitignored) `.bedrock_agentcore.yaml`, so the graded agent is never
+> reconfigured or redeployed from here. The Knowledge Base, Memory and Gateway from the
+> course are **reused read-only**; no course Lambda or Gateway target was changed.
+
+## Architecture
+
+```
+agentcore invoke --agent ict_agent_lab '{"prompt", "customer_id", "session_id"}'
+                          │
+┌──────────── AgentCore Runtime: ict_agent_lab (us-east-1) ─────────────────────────────┐
+│ main.py → invoke()                                                                    │
+│  Strands Agent (Nova 2 Lite) + SummarizingConversationManager(0.3, keep 10)           │
+│   ├── MemoryHook ─────────────► AgentCore Memory (reused; identity/preferences only,  │
+│   │                             money amounts redacted before saving)                 │
+│   ├── search_knowledge_base ──► Bedrock KB (reused)                                   │
+│   ├── calculate_loyalty_discount ► Code Interpreter → LoyaltyDiscountResult (Pydantic) │
+│   ├── AgentCoreBrowser ───────► AgentCore Browser                                     │
+│   ├── track_order ────────────► Gateway get_order        → OrderStatus (Pydantic)     │
+│   ├── process_refund ─────────► Gateway get_order + initiate_refund(amount)           │
+│   │                             → RefundRequest(amount>0) / RefundResult (Pydantic)   │
+│   ├── other Gateway tools (get_customer, get_customer_orders, refund status, label)   │
+│   ├── calculate_risk_reward ──► pure Python → RiskReward (Pydantic)                   │
+│   └── build_research_hypothesis ► pure Python → ResearchHypothesis (Pydantic)         │
+└───────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+Code layout:
+
+| Path | What |
+|------|------|
+| `main.py` | Agent entrypoint, tools, system prompt, MemoryHook |
+| `ict_lab/models.py` | Pydantic v2 models + `validate_to_json` (error JSON on failure) |
+| `ict_lab/gateway.py` | MCP result parsing (Lambda-proxy bodies), tool-name resolution, refund amount rules |
+| `ict_lab/loyalty.py` | Pure-Python loyalty maths (Code Interpreter fallback + tests) |
+| `ict_lab/ict_tools.py` | Risk/reward and research-hypothesis logic |
+| `ict_lab/memory_utils.py` | Memory context header + money redaction |
+| `lambda/` | Course Lambdas (unchanged); `lambda/lab/` = refund Lambda copy requiring `amount > 0` (**not deployed**) |
+| `docs/ict_glossary.md` | Optional, user-editable ICT glossary (not ingested into the KB) |
+| `scripts/` | `deploy_lab.sh`, `run_scenarios.sh`, `cleanup_lab.sh` |
+| `tests/` | pytest unit tests; `tests/outputs/` raw outputs |
+
+## What changed vs. the course version
+
+### Fixes
+1. **Source of truth.** The system prompt now says current tool results win for prices,
+   totals, discounts, refund amounts and order status; memory is for identity and
+   preferences only; on conflict use the tool number without mentioning the stale one.
+   The MemoryHook labels retrieved context accordingly and **redacts money amounts**
+   (`$95.00` → `[amount omitted]`) before `create_event`, so calculated totals are not
+   written into long-term memory.
+2. **Refund amount.** In the course run the refund Lambda approved **$0** because the agent
+   never passed `amount`. The raw `get_order` / `initiate_refund` gateway tools are now hidden
+   behind `track_order` and `process_refund`; `process_refund` requires `amount`, re-fetches the
+   order total, rejects `amount <= 0` or `> total` (`RefundRequest`), and validates the
+   response (`RefundResult.amount > 0`). A lab copy of the Lambda + schema that also require
+   `amount > 0` is in `lambda/lab/` for an optional `-lab` Gateway target.
+
+### Features
+- **Pydantic v2 validation** of every structured tool output: `OrderStatus`, `RefundResult`,
+  `LoyaltyDiscountResult` (keeps rubric keys `points_redeemed`, `tier_discount_pct`,
+  `final_total`, `remaining_points` plus the others, and cross-checks the maths — e.g. the
+  course run's wrong `$95` final total would now be rejected), `RiskReward`,
+  `ResearchHypothesis`. Invalid output becomes `{"error": "... validation failed; do not use
+  these numbers.", "details": [...]}`.
+- **`SummarizingConversationManager`** (`summary_ratio=0.3`, `preserve_recent_messages=10`;
+  constructor checked against the installed strands-agents 1.57.1 source).
+- **`calculate_risk_reward(entry, stop_loss, target, direction?)`** → risk, reward, R multiple;
+  infers direction from the stop and rejects stops/targets on the wrong side.
+- **`build_research_hypothesis(question, …)`** → a validated `ResearchHypothesis`
+  (hypothesis, instrument, observable_condition, invalidation_condition,
+  measurement_window {start, end, IANA timezone, label}, required_evidence). The tool parses
+  instrument / window / timezone from the question; the agent can override any field. It
+  structures a test — it does not claim the idea is true.
+
+## How to run
+
+```bash
+uv sync --python 3.13
+uv run pytest -q                      # unit tests, no AWS needed
+
+# needs AWS credentials (us-east-1)
+./scripts/deploy_lab.sh               # configure + deploy ict_agent_lab + setup_permissions
+./scripts/run_scenarios.sh            # saves tests/outputs/*.txt (account id redacted)
+uv run agentcore invoke --agent ict_agent_lab \
+  '{"prompt": "Long NQ entry 18000, stop 17980, target 18060. R multiple?", "customer_id": "CUST-LAB-1"}'
+```
+
+Resource IDs (`GATEWAY_URL`, `KB_ID`, `REGION`, `MEMORY_ID`) are literals in `main.py`
+(`setup_permissions.py` parses them).
+
+## Test results
+
+### Unit tests (pytest)
+
+**64 passed** — see [`tests/outputs/pytest.txt`](tests/outputs/pytest.txt). Covers model
+validation (valid/invalid orders, refund amount > 0, loyalty consistency checks, timezone and
+window rules), risk/reward edge cases (wrong-side stop/target, zero risk, direction inference
+and aliases, rounding), hypothesis parsing/overrides/failures, gateway payload parsing and
+memory redaction.
+
+### Deployed scenarios (`ict_agent_lab`)
+
+| # | Scenario | Customer | Expected | Result |
+|---|----------|----------|----------|--------|
+| 1 | Track ORD-001 | CUST-123 | SHIPPED, UPS, $89.99 | _not run yet_ |
+| 2 | Refund ORD-002 | CUST-123 | refund **$139.99** (not $0) | _not run yet_ |
+| 3 | Platinum benefits (KB) | CUST-123 | KB tier benefits | _not run yet_ |
+| 4 | Memory store/recall | fresh id | recalls "Jane", concise | _not run yet_ |
+| 5 | Gold, 4250 pts, $150 | fresh id | 4000 pts, 10%, **$99.00**, 400 remaining | _not run yet_ |
+| 5b | Same, stale memory | CUST-123 | **$99.00** (tool beats memory) | _not run yet_ |
+| 6 | Browser page title | CUST-123 | udacity.com title | _not run yet_ |
+| 7 | Risk/reward long NQ 18000/17980/18060 | fresh id | risk 20, reward 60, **3R** | _not run yet_ |
+| 8 | Silver Bullet hypothesis | fresh id | NQ, 10:00–11:00 America/New_York | _not run yet_ |
+
+_The deployment and scenario runs have not been done yet (no AWS credentials were
+available in the build session). Run `./scripts/deploy_lab.sh` and
+`./scripts/run_scenarios.sh`, then fill in this table._
+
+## Cleanup
+
+```bash
+./scripts/cleanup_lab.sh    # agentcore destroy --agent ict_agent_lab (lab runtime only)
+```
+
+- Run this **only in this repo**. Never run `agentcore destroy` in the course repo.
+- If you deploy the optional lab Lambda (`refund-processor-lab`) and a `-lab` Gateway target
+  or Gateway, delete those too. The reused KB, Memory and course Gateway belong to the course
+  project; do not delete them from here.
+
+## Disclaimer
+
+Research tooling only; not financial advice. The ICT glossary holds generic, user-editable
+definitions, not verified trading facts.
