@@ -162,7 +162,7 @@ Deployed with `./scripts/deploy_lab.sh` and run with `./scripts/run_scenarios.sh
 in [`tests/outputs/`](tests/outputs/). The run redacted every 12-digit number, so the fresh customer
 ID shows as `CUST-LAB-XXXXXXXXXXXX`.
 
-**Summary: 12 invocations, 10 pass and 2 fail (T1 order tracking, T4b memory recall). Course rubric: 4 of 6 scenarios pass (T2, T3, T5, T6); T1 and T4 need a re-run.**
+**Summary: all 6 course scenarios and all 4 extension tests pass. T1 and T4b failed on the first run (a cold-start 500 and a too-short memory wait) and passed on re-run; both attempts are kept in `tests/outputs/`.**
 
 | # | Scenario | Customer | Expected | Result |
 |---|----------|----------|----------|--------|
