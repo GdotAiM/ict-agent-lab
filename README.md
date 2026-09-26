@@ -102,11 +102,12 @@ Resource IDs (`GATEWAY_URL`, `KB_ID`, `REGION`, `MEMORY_ID`) are literals in `ma
 
 ### Unit tests (pytest)
 
-**64 passed** — see [`tests/outputs/pytest.txt`](tests/outputs/pytest.txt). Covers model
+**70 passed** — see [`tests/outputs/pytest.txt`](tests/outputs/pytest.txt). Covers model
 validation (valid/invalid orders, refund amount > 0, loyalty consistency checks, timezone and
 window rules), risk/reward edge cases (wrong-side stop/target, zero risk, direction inference
-and aliases, rounding), hypothesis parsing/overrides/failures, gateway payload parsing and
-memory redaction.
+and aliases, rounding), hypothesis parsing/overrides/failures, gateway payload parsing, memory redaction, and an
+offline wiring test of `invoke()` with a fake Gateway (refund passes the order total,
+bad amounts never reach `initiate_refund`, SummarizingConversationManager attached).
 
 ### Deployed scenarios (`ict_agent_lab`)
 
