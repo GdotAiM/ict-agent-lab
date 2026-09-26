@@ -1,6 +1,11 @@
 """
+ICT Agent Lab -- personal extension of the course customer-support agent
+=========================================================================
+PERSONAL LAB COPY (not the Udacity submission). Deployed as the separate
+AgentCore runtime `ict_agent_lab`; reuses the course KB, Memory and Gateway.
+
+Original description:
 Customer Support AI Agent (Amazon Bedrock AgentCore + Strands Agents)
-======================================================================
 A customer support agent for an Amazon-style store, served by the AgentCore
 Runtime (BedrockAgentCoreApp). It uses Amazon Nova 2 Lite via Bedrock and has:
 
@@ -43,9 +48,15 @@ from typing import Dict
 from bedrock_agentcore.tools.code_interpreter_client import code_session
 from strands_tools.browser import AgentCoreBrowser
 
+from ict_lab.memory_utils import CONTEXT_HEADER, redact_amounts
+from ict_lab.gateway import (
+    GatewayError, error_json, parse_gateway_result, resolve_refund_amount,
+    resolve_tool_name,
+)
+
 
 logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger("CSAI_Agent")
+logger = logging.getLogger("ICT_Agent_Lab")
 
 
 # -- TODO 1 -- App Initialisation ---------------------------------------------
@@ -135,7 +146,7 @@ class MemoryHook(HookProvider):
                 context_block = "\n".join(all_context)
                 original_text = messages[-1]["content"][0]["text"]
                 messages[-1]["content"][0]["text"] = (
-                    f"Customer Context:\n{context_block}\n\n{original_text}"
+                    f"{CONTEXT_HEADER}\n{context_block}\n\n{original_text}"
                 )
         except Exception as exc:
             logger.error("Failed to retrieve customer context: %s", exc)
@@ -162,6 +173,10 @@ class MemoryHook(HookProvider):
                     break
 
             if user_text and agent_text:
+                # Memory is for identity/preferences only: strip calculated or
+                # looked-up money amounts so stale totals are never recalled.
+                user_text = redact_amounts(user_text)
+                agent_text = redact_amounts(agent_text)
                 self.memory_client.create_event(
                     memory_id=self.memory_id,
                     actor_id=self.actor_id,
@@ -326,7 +341,8 @@ print(json.dumps(result, indent=2))
 
 
 # -- TODO 8 -- Agent Entrypoint -----------------------------------------------
-SYSTEM_PROMPT = """You are a customer support agent for an Amazon store. You help customers with:
+SYSTEM_PROMPT = """You are a customer support agent for an Amazon store, running in a personal
+lab build that is also being extended into an ICT trading research assistant. You help customers with:
 - Product questions and specifications
 - Order tracking and status updates
 - Refund and return processing
@@ -334,10 +350,28 @@ SYSTEM_PROMPT = """You are a customer support agent for an Amazon store. You hel
 - General support inquiries
 You have access to:
 - A knowledge base with product catalog, return policies, and loyalty program details
-- Order tracking and refund processing tools via the AgentCore Gateway
+- track_order / process_refund (validated wrappers around the AgentCore Gateway order and refund tools)
+- Other Gateway tools (customer lookup, refund status, return labels)
 - A code interpreter for precise loyalty discount calculations
 - A browser for looking up live web information
-- Persistent memory across sessions to remember customer preferences
+- Persistent memory across sessions to remember customer identity and preferences
+
+SOURCE-OF-TRUTH RULES (always follow):
+1. Current tool results win. Prices, order totals, discounts, final totals, points,
+   refund amounts and order status must come from a tool call made in THIS conversation.
+2. Memory ("Customer Context") is only for identity (name, customer details the user
+   stated) and preferences (tone, format). Never quote a price, total, discount, refund
+   amount or order status from memory.
+3. If memory and a tool result disagree, use the tool's number and do not mention the
+   stale value.
+4. If you need a number and have no tool result for it yet, call the tool first.
+
+REFUND RULES:
+- Before refunding, look up the order with track_order to get its total.
+- Call process_refund with order_id, reason and amount (the order total for a full
+  refund, or the smaller amount the customer asked for). Never refund $0.
+- Report the refund amount exactly as returned by process_refund.
+
 Always be helpful, accurate, and professional. Use the tools available to you
 to provide the best possible support experience."""
 
@@ -374,7 +408,67 @@ async def invoke(payload, context=None):
 
     with client:
         gateway_tools = client.list_tools_sync()
-        tools.extend(gateway_tools)
+        names = [t.tool_name for t in gateway_tools]
+        order_tool = resolve_tool_name(names, "get_order")
+        refund_tool = resolve_tool_name(names, "initiate_refund")
+
+        def call_gateway(name: str, arguments: dict) -> dict:
+            result = client.call_tool_sync(
+                tool_use_id=f"lab-{uuid.uuid4()}", name=name, arguments=arguments,
+            )
+            return parse_gateway_result(result)
+
+        @tool
+        def track_order(order_id: str) -> str:
+            """
+            Look up an order (status, items, total, tracking). Use this for any
+            question about an order and before any refund.
+
+            Args:
+                order_id: Order ID, e.g. ORD-001
+
+            Returns:
+                Order details as JSON, or an {"error": ...} JSON
+            """
+            if not order_tool:
+                return error_json("Order lookup tool is not available on the gateway.")
+            try:
+                return json.dumps(call_gateway(order_tool, {"order_id": order_id}))
+            except GatewayError as exc:
+                return error_json(str(exc), order_id=order_id)
+
+        @tool
+        def process_refund(order_id: str, reason: str, amount: float) -> str:
+            """
+            Initiate a refund. Always look up the order total with track_order first
+            and pass it as amount (or a smaller partial amount). amount must be > 0.
+
+            Args:
+                order_id: Order ID to refund, e.g. ORD-002
+                reason: Reason for the refund
+                amount: Refund amount in USD (> 0, <= order total)
+
+            Returns:
+                Refund confirmation as JSON, or an {"error": ...} JSON
+            """
+            if not (order_tool and refund_tool):
+                return error_json("Order/refund tools are not available on the gateway.")
+            try:
+                order = call_gateway(order_tool, {"order_id": order_id})
+                final_amount = resolve_refund_amount(order.get("total"), amount)
+                refund = call_gateway(refund_tool, {
+                    "order_id": order_id, "reason": reason, "amount": final_amount,
+                })
+                if not refund.get("amount"):
+                    return error_json("Refund service returned no amount.", refund=refund)
+                return json.dumps(refund)
+            except (GatewayError, ValueError) as exc:
+                return error_json(str(exc), order_id=order_id)
+
+        # Replace the raw get_order / initiate_refund tools with the wrappers.
+        hidden = {order_tool, refund_tool}
+        tools.extend(t for t in gateway_tools if t.tool_name not in hidden)
+        tools.extend([track_order, process_refund])
 
         agent = Agent(
             model=model,
