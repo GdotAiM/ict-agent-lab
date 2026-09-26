@@ -179,6 +179,82 @@ ID shows as `CUST-LAB-XXXXXXXXXXXX`.
 | 9 | FTN workflow on `sample_eurusd` | fresh id | matches local run | ✅ PASS: cbdr; L1–L4 **1.08710 / 1.08380 / 1.08050 / 1.07720**; confluence cbdr_dn_0 × D_FVG_bear; no NO-TRADE reasons; **entry_candidate** (paper). Identical to `ftn_local_tool_calls.txt`. |
 | 10 | FTN briefing `integration_m1_m9_eurusd` | fresh id | works in runtime | ✅ PASS: 5 candidates (REV, CONSO, PIP20, BB ineligible; FTN annotate / objectives_only); no entry ticket. FTN's temp-dir redirection works inside the runtime. |
 
+### Screenshots
+
+Made from the raw outputs by `scripts/render_screenshots.py`. The toolkit banner and the session/ARN/log box are trimmed, and 12-digit numbers are masked. The T1 and T4 images use the passing re-runs. The re-run files were saved without the command line, so those images show the prompt as a comment instead.
+
+#### Test 1 — Order tracking (re-run)
+
+SHIPPED, UPS, TRK987654321, $89.99.
+
+![Test 1 — Order tracking (re-run)](screenshots/test1_order_tracking.png)
+
+#### Test 2 — Refund
+
+REF-RISFUSK6, **$139.99**, APPROVED.
+
+![Test 2 — Refund](screenshots/test2_refund.png)
+
+#### Test 3 — Knowledge Base (RAG)
+
+Platinum: free same-day shipping, 15% discount, priority support.
+
+![Test 3 — Knowledge Base (RAG)](screenshots/test3_kb_loyalty.png)
+
+#### Test 4a — Memory store (re-run)
+
+Session A: "Hi, I am Jane. I prefer concise responses."
+
+![Test 4a — Memory store (re-run)](screenshots/test4a_memory_store.png)
+
+#### Test 4b — Memory recall (re-run)
+
+New session B, ~150 s later: remembers **Jane** and **concise responses**.
+
+![Test 4b — Memory recall (re-run)](screenshots/test4b_memory_recall.png)
+
+#### Test 5 — Loyalty discount, fresh customer
+
+**Final $99.00**, 400 points remaining.
+
+![Test 5 — Loyalty discount, fresh customer](screenshots/test5_discount_fresh.png)
+
+#### Test 5b — Loyalty discount, CUST-123 (stale memory)
+
+**Final $99.00**; the tool result beats the stale $95 in memory.
+
+![Test 5b — Loyalty discount, CUST-123 (stale memory)](screenshots/test5_discount_cust123.png)
+
+#### Test 6 — Browser
+
+"Learn the Latest Tech Skills; Advance Your Career \| Udacity".
+
+![Test 6 — Browser](screenshots/test6_browser.png)
+
+#### Test 7 — Risk/reward
+
+Risk 20, reward 60, **3.0R**.
+
+![Test 7 — Risk/reward](screenshots/test7_risk_reward.png)
+
+#### Test 8 — Research hypothesis
+
+All ResearchHypothesis fields; window 10:00–11:00 America/New_York.
+
+![Test 8 — Research hypothesis](screenshots/test8_hypothesis.png)
+
+#### Test 9 — FTN workflow (PAPER)
+
+CBDR, L1–L4 1.08710 / 1.08380 / 1.08050 / 1.07720, entry_candidate (paper).
+
+![Test 9 — FTN workflow (PAPER)](screenshots/test9_ftn_workflow.png)
+
+#### Test 10 — FTN briefing (PAPER)
+
+5 candidates, no entry ticket.
+
+![Test 10 — FTN briefing (PAPER)](screenshots/test10_ftn_briefing.png)
+
 **Follow-ups:**
 1. Re-run T1, and T4b after a wait of at least 2 minutes.
 2. Check CloudWatch for the T1 500.

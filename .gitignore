@@ -6,5 +6,4 @@ __pycache__/
 .bedrock_agentcore.yaml
 .env
 *.zip
-screenshots/
 vendor/ftn-agent/dispatch/
