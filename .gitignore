@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.bedrock_agentcore/
+.bedrock_agentcore.yaml
+.env
+*.zip
+screenshots/
