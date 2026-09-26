@@ -256,9 +256,8 @@ CBDR, L1–L4 1.08710 / 1.08380 / 1.08050 / 1.07720, entry_candidate (paper).
 ![Test 10 — FTN briefing (PAPER)](screenshots/test10_ftn_briefing.png)
 
 **Follow-ups:**
-1. Re-run T1, and T4b after a wait of at least 2 minutes.
-2. Check CloudWatch for the T1 500.
-3. Consider making the prompt quote tool fields verbatim, to fix the "$15" and "$20 per contract" labels.
+1. Make the prompt quote tool fields verbatim, to fix the "$15" (should be $11) and "$20 per contract" (should be points) labels.
+2. Increase the wait between the memory store and recall tests in `scripts/run_scenarios.sh` to at least 2 minutes, and add a warm-up call after deploy.
 
 ## Cleanup
 
