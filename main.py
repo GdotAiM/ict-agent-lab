@@ -53,6 +53,12 @@ from ict_lab.gateway import (
     GatewayError, error_json, parse_gateway_result, resolve_refund_amount,
     resolve_tool_name,
 )
+from pydantic import ValidationError
+from ict_lab.models import (
+    LoyaltyDiscountResult, OrderStatus, RefundRequest, RefundResult,
+    validate_to_json, validation_error_json,
+)
+from ict_lab.loyalty import compute_loyalty_discount, normalize_category, normalize_tier
 
 
 logging.basicConfig(level=logging.WARNING)
@@ -245,8 +251,19 @@ def calculate_loyalty_discount(
         product_category: standard, device, or fresh
 
     Returns:
-        Full discount breakdown and final price
+        Full discount breakdown and final price (validated LoyaltyDiscountResult JSON)
     """
+    # Validate/normalise inputs first (also keeps arbitrary strings out of the sandbox code).
+    try:
+        tier = normalize_tier(tier)
+        product_category = normalize_category(product_category)
+        loyalty_points = int(loyalty_points)
+        order_total = float(order_total)
+        if order_total <= 0 or loyalty_points < 0:
+            raise ValueError("order_total must be > 0 and loyalty_points >= 0")
+    except (TypeError, ValueError) as exc:
+        return json.dumps({"error": f"Invalid loyalty input: {exc}"})
+
     code = f"""
 import json, math
 
@@ -312,32 +329,17 @@ print(json.dumps(result, indent=2))
                         for c in result.get("content", [])
                         if c.get("type") == "text"
                     )
-                # Validate and re-emit the JSON the generated code printed.
-                return json.dumps(json.loads(stdout))
+                # Validate the sandbox JSON with Pydantic before returning it.
+                return validate_to_json(LoyaltyDiscountResult, stdout)
 
             raise RuntimeError("Code Interpreter returned no result")
 
     except Exception as e:
         logger.warning("Code Interpreter unavailable, using fallback: %s", e)
-        # Fallback: tier discount only, no points redeemed.
-        tier_discount_rate = {"Silver": 0.00, "Gold": 0.10, "Platinum": 0.15}.get(tier, 0.00)
-        tier_discount = order_total * tier_discount_rate
-        final_total = order_total - tier_discount
-        points_earned = int(order_total * {"standard": 1, "device": 2, "fresh": 5}.get(product_category, 1))
-        fallback = {
-            "points_redeemed": 0,
-            "points_value": 0.0,
-            "tier": tier,
-            "tier_discount_pct": round(tier_discount_rate * 100, 2),
-            "tier_discount": round(tier_discount, 2),
-            "original_total": order_total,
-            "final_total": round(final_total, 2),
-            "total_savings": round(tier_discount, 2),
-            "points_earned": points_earned,
-            "remaining_points": loyalty_points + points_earned,
-            "note": "Code Interpreter unavailable; fallback tier discount applied.",
-        }
-        return json.dumps(fallback)
+        # Fallback: same rules computed locally in pure Python, still validated.
+        fallback = compute_loyalty_discount(loyalty_points, tier, order_total, product_category)
+        fallback["note"] = "Code Interpreter unavailable; computed locally with the same rules."
+        return validate_to_json(LoyaltyDiscountResult, fallback)
 
 
 # -- TODO 8 -- Agent Entrypoint -----------------------------------------------
@@ -433,7 +435,9 @@ async def invoke(payload, context=None):
             if not order_tool:
                 return error_json("Order lookup tool is not available on the gateway.")
             try:
-                return json.dumps(call_gateway(order_tool, {"order_id": order_id}))
+                return validate_to_json(
+                    OrderStatus, call_gateway(order_tool, {"order_id": order_id})
+                )
             except GatewayError as exc:
                 return error_json(str(exc), order_id=order_id)
 
@@ -454,14 +458,18 @@ async def invoke(payload, context=None):
             if not (order_tool and refund_tool):
                 return error_json("Order/refund tools are not available on the gateway.")
             try:
-                order = call_gateway(order_tool, {"order_id": order_id})
-                final_amount = resolve_refund_amount(order.get("total"), amount)
-                refund = call_gateway(refund_tool, {
-                    "order_id": order_id, "reason": reason, "amount": final_amount,
-                })
-                if not refund.get("amount"):
-                    return error_json("Refund service returned no amount.", refund=refund)
-                return json.dumps(refund)
+                order = OrderStatus.model_validate(
+                    call_gateway(order_tool, {"order_id": order_id})
+                )
+                request = RefundRequest(
+                    order_id=order.order_id,
+                    reason=reason,
+                    amount=resolve_refund_amount(order.total, amount),
+                )
+                refund = call_gateway(refund_tool, request.model_dump(include={"order_id", "reason", "amount"}))
+                return validate_to_json(RefundResult, refund)
+            except ValidationError as exc:
+                return validation_error_json(exc.title, exc)
             except (GatewayError, ValueError) as exc:
                 return error_json(str(exc), order_id=order_id)
 
